@@ -1,0 +1,26 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{%block title %}Quiz{% endblock %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}quiz_template/css/quiz.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script src="{{STATIC_URL}}elearning_academy/js/react.min.js"></script>
+<script src="{{STATIC_URL}}elearning_academy/js/JSXTransformer.js"></script>
+
+<script type="text/jsx" src="{{STATIC_URL}}quiz_template/js/quiz.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}quiz_template/js/main.jsx"></script>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<div id="quiz_template" class="col-md-12">
+
+</div>
+
+{% endblock %}

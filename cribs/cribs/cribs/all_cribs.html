@@ -1,0 +1,32 @@
+{% extends 'cribs/cribs_base.html' %}
+
+{% block title %}All cribs{% endblock %}
+
+{% block sidebar %}
+	<h4>All cribs of {{ assignment.name }}</h4>
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Cribs</li>
+	</ul>
+</div>
+
+	<table class="table table-striped">
+	<tr>
+      <th>Student Name</th>
+      <th>Crib Title</th>
+      <th>Crib Status</th>
+    </tr>
+    {% for crib in allcribs %}
+    <tr>
+      <td>{{ crib.created_by }}</td>
+      <td><a href="{% url 'cribs_cribDetail' crib.id %}">{{ crib.title }}</a></a></td>
+      <td>{% if crib.is_resolved %} Resolved {% else %} Unresolved {% endif %}</a></td>
+    </tr>
+    {% endfor %}
+    
+{% endblock %}

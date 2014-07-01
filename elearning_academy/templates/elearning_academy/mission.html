@@ -1,0 +1,30 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block title %}{{MY_SITE_NAME}}{% endblock %}
+
+{% block cssLinks %}
+    <style type="text/css">
+        .about-header {
+            margin-bottom: 7px;
+        }
+        p {
+            text-align:justify;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="about-header">
+            <span class="lead">{{MY_SITE_NAME}}</span><br/>
+            <span class="muted">Our Mission and Philosophy</span>
+        </div>
+        <p style="text-align:justify">
+            The state of technical education in India is rather poor. In many universities, courses are taught by just graduated students, who themselves have not experienced quality teaching. Some courses are often not even taught due to shortage of faculty. Students often have to study on their own. This has wide-spread ramifications. Students waste four precious years of their life with nothing much to show in the end. The companies that hire them have to provide their own training which can be a significant overhead (both in terms of time and money). The students that go on for Masters are often ill-equipped to carry out research and by the time training ends, they are ready to graduate. So, not much research is output.
+        </p>
+        <p style="text-align:justify">
+            The goal of this endeavour is to provide quality education to all, unlike so far where only a select few who have been fortunate enough to crack the highly competitive entrance exams could access. The hope is that this effort of ours will empower students, who equipped with quality technical education will go on to do impactful things for our society.
+        </p>
+        <hr/>
+    </div>
+{% endblock %}

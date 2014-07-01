@@ -1,0 +1,27 @@
+[
+    {
+        "model": "courseware.ParentCategory",
+        "pk": 1,
+        "fields": {
+            "title": "Computer Science"
+        }
+    },
+    {
+        "model": "courseware.Category",
+        "pk": 1,
+        "fields": {
+            "parent": 1,
+            "title": "Systems"
+        }
+    },
+    {
+        "model": "user_profile.CustomUser",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "is_instructor": 1,
+            "is_content_developer": 1,
+            "default_mode": "C"
+        }
+    }
+]

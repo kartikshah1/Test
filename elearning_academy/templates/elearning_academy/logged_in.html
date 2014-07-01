@@ -1,0 +1,99 @@
+{% extends "elearning_academy/root.html" %}
+
+{% block title %}
+{{MY_SITE_NAME}}
+{% endblock %}
+
+{% block navLinks %}
+
+    {% if not user.is_authenticated %}
+        <li><a href="{% url 'login' %}">
+                <span style="border-left:1px solid; border-color:#777777;
+                    padding-left:15px;">
+                    Log In
+                </span>
+            </a>
+        </li>
+        <li><a href="{% url 'signup' %}" style="padding-left:0px;">
+            Sign Up</a></li>
+    {% else %}
+        {% if IS_INSTRUCTOR or IS_CONTENT_DEVELOPER %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                style="padding-right:0px;">
+                View As ({{request.session.mode}})<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu"
+                aria-labelledby="mode-dropdownMenu">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"
+                    onclick="changeMode('S')">
+                    Student &nbsp; &nbsp;
+                    {% if request.session.mode == 'S' %}
+                        <span class="glyphicon glyphicon-ok" />
+                    {% endif %}
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"
+                    onclick="changeMode('I')">
+                    Instructor
+                    {% if request.session.mode == 'I' %}
+                        <span class="glyphicon glyphicon-ok" />
+                    {% endif %}
+                    </a>
+                </li>
+                {% if IS_CONTENT_DEVELOPER %}
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"
+                    onclick="changeMode('C')">
+                    Content Developer
+                    {% if request.session.mode == 'C' %}
+                        <span class="glyphicon glyphicon-ok" />
+                    {% endif %}
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </li>
+        {% endif %}
+        <li>
+            <a href="{% url 'mycourselist' %}"><span class="glyphicon glyphicon-home">
+            </span> Home</a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-user"></span>{{request.user.first_name}}
+            {{request.user.last_name}}<b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                {% if request.session.mode == 'S' %}
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="{% url 'mycourselist' %}"> My Courses </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="{% url 'pastcourses' %}"> Past Courses </a>
+                </li>
+                {% elif request.session.mode == 'I' %}
+                    <li role="presentation">
+                        <a role="menuitem" href="{% url 'mycourselist' %}"> My Offerings </a>
+                    </li>
+                {% elif request.session.mode == 'C' %}
+                    <li role="presentation">
+                        <a role="menuitem" href="{% url 'mycourselist' %}"> My Textbooks </a>
+                    </li>
+                {% endif %}
+                <li role="presentation" class="divider">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="{% url 'view-profile' %}">Profile</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="{% url 'settings' %}">Settings</a>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+{% endblock %}

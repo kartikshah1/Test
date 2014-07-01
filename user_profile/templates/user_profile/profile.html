@@ -1,0 +1,902 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block body %}
+
+<div id="user-profile" class= "row">
+    <div class="row">
+        <div id="error" class="col-md-8 col-md-offset-2">
+            {% if error %}
+            <div class="alert alert-danger">
+                <strong>
+                    {% if error_list %}
+                        <ul style="list-style-type:none; margin:0px;">
+                        {% for m in error_message %}
+                            <li>{{ m }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        {{error_message}}
+                    {% endif %}
+                </strong>
+            </div>
+            {% endif %}
+            {% if info %}
+            <div class="alert alert-success">
+                <strong>
+                    {{info_message}}
+                </strong>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div id="profile-header" class="profile-row row">
+        <div class="row-data col-md-10 col-md-offset-1">
+            <div class="row">
+                <div id="user-photo" class="col-md-4 col-md-offset-1" >
+                    <div id="edit-photo" class="edit-image-button">
+                        <a data-toggle="modal" href="#editImageModal" class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-edit icon" style="padding-right:5px;"></span>
+                            Edit !
+                        </a>
+                    </div>
+                    {% if  photo != '/media/' %}
+                        <img class="profile-image img-thumbnail" src="{{photo}}" />
+                    {% else %}
+                        <img class="profile-image img-thumbnail" src="{{default_image}}" />
+                    {% endif %}
+                </div>
+                <div id="user-intro" class="col-md-6 col-md-offset-1">
+                    <div id="edit-intro" class="edit-button">
+                        <a href="#" onclick="editDetail('user-intro', 'user-intro-edit')"
+                            class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-edit icon" style="padding-right:5px;"></span>
+                            Edit !
+                        </a>
+                    </div>
+
+                    <h2 class="user-name"> {{user_name}} </h2>
+                    <blockquote> <small> <p class ="user-about">
+                        {% if about %}
+                                {{about}}
+                        {% else %}
+                                "About : Describe youself. Edit now !"
+                        {% endif %}
+                    </p></small> </blockquote>
+                    <p class="text-info">
+                        {% if interests %}
+                                {{interests}}
+                        {% else %}
+                                "Interests : Tell us what excites you !"
+                        {% endif %}
+                    </p>
+                </div>
+                <div id="user-intro-edit" class="col-md-6 col-md-offset-0" style="display:none;">
+                    <form class="form-image" action="{% url 'view-profile' %}" method="post"
+                        style="padding:10px 15px 10px 15px;margin:0px"> {% csrf_token %}
+                        <table>{{ about_form.as_table }}</table>
+                        <br />
+                        <button type="button" class="btn btn-danger pull-left"
+                            onclick="editDetail('user-intro-edit', 'user-intro')">Cancel</button>
+                        <button type="submit" class="btn btn-primary pull-right">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-row row">
+        <div class="row-data col-md-10 col-md-offset-1">
+            <div class="profile-heading col-md-3 col-md-offset-1">
+                <strong> <h3 class="text-center"> Personal </h3> </strong>
+            </div>
+            <div id="user-personal" class="col-md-6 col-md-offset-2 profile-info"
+                {% if profile_exists == False %} style="display:none;" {% endif %}>
+
+                <div id="edit-personal" class="edit-button">
+                    <a href="#" onclick="editDetail('user-personal', 'user-personal-edit')"
+                        class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-edit icon" style="padding-right:5px;"></span>
+                        Edit !
+                    </a>
+                </div>
+
+                <table class="table" >
+                    <tbody>
+                        <tr>
+                            <th> Date of Birth </th>
+                            <td> {% if dob %}
+                                    {{dob}}
+                                {% else %}
+                                    Update Now !
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Gender </th>
+                            <td> {% if gender %}
+                                    {{gender}}
+                                {% else %}
+                                    Update Now !
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Location </th>
+                            <td>
+                            {% if city and state and country %}
+                                {{ city }} <em> in </em>{{ state }},{{ country }}
+                            {% elif city %}
+                                {{city}}
+                            {% elif state %}
+                                {{state}}
+                            {% elif country %}
+                                {{country}}
+                            {% elif city and state %}
+                                {{city}} <em> in </em> {{state}}
+                            {% elif city and country %}
+                                {{city}} <em> in </em> {{country}}
+                            {% elif country and state %}
+                                {{state}},{{country}}
+                            {% else %}
+                                Update Now !
+                            {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="user-personal-edit" class="col-md-7 col-md-offset-1"
+                {% if profile_exists %} style="display:none;" {% endif %}>
+                <form class="form-image" action="{% url 'view-profile' %}" method="post"
+                    style="padding:10px 15px 10px 15px;margin:0px"> {% csrf_token %}
+                    <table>
+                        {{ personal_info_form.as_table }}
+                    </table>
+                    <br />
+                    {% if profile_exists %}
+                        <button type="button" class="btn btn-danger pull-left"
+                            onclick="editDetail('user-personal-edit', 'user-personal')">Cancel</button>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary pull-right">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="profile-row row">
+        <div class="row-data col-md-10 col-md-offset-1">
+            <div class="profile-heading col-md-3 col-md-offset-1">
+                <h3 class="text-center"> Education </h3>
+            </div>
+            <div id="user-education" class="col-md-7 col-md-offset-1 profile-info"
+                {%if profile_exists == False %} style="display:none;" {% endif %}>
+
+                <div id="edit-education" class="edit-button">
+                    <a href="#" onclick="editDetail('user-education', 'user-education-edit')"
+                        class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-edit icon" style="padding-right:5px;"></span>
+                        Edit !
+                    </a>
+                </div>
+                {% if education_list|length == 0 %}
+                <div class="row">
+                    <div class="col-md-9 col-md-offset-1">
+                        <p style="text-align:center;"> <em> Tell us where you have studied </em> </p>
+                    </div>
+                </div>
+                {% endif %}
+                {% for education in education_list %}
+                <div class="row">
+                    <div style="border:1px solid #B8B8B8; border-radius:4px; margin-top:2px; padding:0px;"
+                        class="col-md-9 col-md-offset-1">
+                        <div class="row" style="border-bottom: 1px solid #BABABA; margin: 0px 0px;">
+                            <div id="user-education-{{ education.id }}-college"
+                                class="col-md-10 col-md-offset-1">
+                                <h5 class="text-center" style="font-weight:bold; margin:4px 0px;">
+                                    {{ education.college }} </h5>
+                            </div>
+                        </div>
+                        <div class="row" style="margin:0px 0px;">
+                            <div id="user-education-{{ education.id }}-major" \
+                                class="col-md-6 col-md-offset-1">
+                                <span style="font-weight:500; font-size:small; color:#241A1A">
+                                    {{ education.major }} </span>
+                            </div>
+                            <div id="user-education-{{ education.id }}-degree"
+                                class="col-md-3 col-md-offset-1">
+                                <h6 class="text-center"
+                                    style="font-weight:500; font-size:small; color:#241A1A; margin:3px;">
+                                    {{ education.degree }} </h6>
+                            </div>
+                        </div>
+                        <div class="row" style="margin:0px 0px;">
+                            <div id="user-education-{{ education.id }}-start-date" class="col-md-5">
+                                <span class="pull-right">{{ education.start_date }}</span>
+                            </div>
+                            <div id="user-education-{{ education.id }}-start-date" class="col-md-2">
+                                <p class="text-center">to</p>
+                            </div>
+                            <div id="user-education-{{ education.id }}-start-date" class="col-md-5">
+                                {% if education.end_date %}
+                                    <span class="pull-left">{{ education.end_date }}</span>
+                                {% else %}
+                                    <span class="pull-left">present</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="user-education-edit" class="col-md-8 col-md-offset-0"
+                {% if profile_exists %} style="display:none;" {% endif %}>
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-0">
+                        <form id="user-add-education-form" class="form-image"
+                            action="{% url 'view-profile' %}" method="post"
+                            style="padding:10px 15px;margin:0px; border:1px solid #ACA4A4;border-radius: 4px">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="college col-md-12">
+                                    {{ add_education_form.form_method }}
+                                    {{ add_education_form.college }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="major col-md-6">
+                                    {{ add_education_form.major }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ add_education_form.degree }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5" style="padding-right:0px">
+                                    {{ add_education_form.start_date }}
+                                </div>
+                                <div class="col-md-2" style="padding:5px 0px;">
+                                    <h5 class="text-center" style="padding:5px 0px; margin:0px">
+                                        <strong> {{ add_education_form.end_date.label}} </strong>
+                                    </h5>
+                                </div>
+                                <div class="col-md-5" style="padding-left:0px;">
+                                    <span class="pull-right">{{ add_education_form.end_date }} </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                            {% if profile_exists %}
+                                <div class="col-md-4 col-md-offset-2">
+                                <button type="button" class="btn btn-danger pull-left"
+                                    onclick="editDetail('user-education-edit', 'user-education')">Cancel
+                                </button>
+                                </div>
+                                <div class="col-md-4 col-md-offset-2" >
+                            {% else %}
+                                <div class="col-md-4 col-md-offset-8" >
+                            {% endif %}
+                                    <button type="submit" class="btn btn-primary pull-left">Add</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {% for education in education_list %}
+                        <div class="row">
+                            <div style="border:1px solid #B8B8B8; border-radius:4px; margin-top:2px; padding:0px;"
+                                class="col-md-10 col-md-offset-1">
+                                <div class="row" style="border-bottom: 1px solid #BABABA; margin: 0px 0px;">
+                                    <div id="user-education-{{ education.id }}-college"
+                                        class="col-md-10 col-md-offset-1">
+                                        <h5 class="text-center" style="font-weight:bold; margin:4px 0px;">
+                                            {{ education.college }} </h5>
+                                    </div>
+                                    <div id="user-education-{{ education.id }}-delete"
+                                        class="col-md-1">
+                                        <form id="{{ education.id }}-delete-form" class="form-image"
+                                            action="{% url 'view-profile' %}" method="post">
+                                            {% csrf_token %}
+                                            <input id="id_form_method" name="form_method" type="hidden"
+                                                value="remove_education">
+                                            <input id="id_education_id" name="education_id" type="hidden"
+                                                value="{{ education.id }}">
+                                            <button type="submit" class="btn btn-danger pull-right"
+                                                style="padding: 0 2px;">
+                                                <span class="glyphicon glyphicon-trash"> </span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin:0px 0px;">
+                                    <div id="user-education-{{ education.id }}-major" \
+                                        class="col-md-6 col-md-offset-1">
+                                        <span style="font-weight:500; font-size:small; color:#241A1A">
+                                            {{ education.major }} </span>
+                                    </div>
+                                    <div id="user-education-{{ education.id }}-degree"
+                                        class="col-md-3 col-md-offset-1">
+                                        <h6 class="text-center"
+                                            style="font-weight:500; font-size:small; color:#241A1A; margin:3px;">
+                                            {{ education.degree }} </h6>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin:0px 0px;">
+                                    <div id="user-education-{{ education.id }}-start-date" class="col-md-5">
+                                        <span class="pull-right">{{ education.start_date }}</span>
+                                    </div>
+                                    <div id="user-education-{{ education.id }}-start-date" class="col-md-2">
+                                        <p class="text-center">to</p>
+                                    </div>
+                                    <div id="user-education-{{ education.id }}-start-date" class="col-md-5">
+                                        {% if education.end_date %}
+                                            <span class="pull-left">{{ education.end_date }}</span>
+                                        {% else %}
+                                            <span class="pull-left">present</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-row row">
+        <div class="row-data col-md-10 col-md-offset-1">
+            <div class="row">
+                <div class="profile-heading col-md-3 col-md-offset-1">
+                    <h3 class="text-center"> Experience </h3>
+                </div>
+                <div id="user-work" class="col-md-7 col-md-offset-1 profile-info"
+                    {%if profile_exists == False %} style="display:none;" {% endif %}>
+
+                    <div id="edit-work" class="edit-button">
+                        <a href="#" onclick="editDetail('user-work', 'user-work-edit')"
+                            class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-edit icon" style="padding-right:5px;"></span>
+                            Edit !
+                        </a>
+                    </div>
+                    {% if work_list|length == 0 %}
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-1">
+                            <p class="text-center"> <em> Tell us where you have worked </em> </p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% for work in work_list %}
+                        <div class="row">
+                            <div class="col-md-9 col-md-offset-1"
+                                style="border:1px solid #B8B8B8; border-radius:4px; margin-top:2px; padding:0px;">
+                                <div class="row" style="border-bottom: 1px solid #BABABA; margin: 0px 0px;
+                                    border-spacing: 0px">
+                                    <div class="col-md-3 col-md-offset-0" style="padding-left:0px;">
+                                        <span class="input-group-addon" style="background-color: #84B0FF">
+                                            Worked as
+                                        </span>
+                                    </div>
+                                    <div class="col-md-9 col-md-offset-0">
+                                        <span class="input-group-addon" style="background-color: white; border:0px">
+                                            {{ work.position }} </span>
+                                    </div>
+                                </div>
+                                <div class="row" style="border-bottom: 1px solid #BABABA; margin: 0px 0px;
+                                    border-spacing: 0px">
+                                    <div class="col-md-3 col-md-offset-0" style="padding-left:0px;">
+                                        <span class="input-group-addon" style="background-color: #84B0FF">
+                                            In
+                                        </span>
+                                    </div>
+                                    <div class="col-md-9 col-md-offset-0">
+                                        <span class="input-group-addon" style="background-color: white; border:0px">
+                                            {{ work.company }} </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        <span style="display:block; text-align:center;"> {{ work.description }} </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="user-work-{{ work.id }}-start-date" class="col-md-5">
+                                        <span class="pull-right">{{ work.start_date }}</span>
+                                    </div>
+                                    <div id="user-work-{{ work.id }}-start-date" class="col-md-2">
+                                        <p class="text-center">to</p>
+                                    </div>
+                                    <div id="user-work-{{ work.id }}-start-date" class="col-md-5">
+                                        {% if work.end_date %}
+                                            <span class="pull-left">{{ work.end_date }}</span>
+                                        {% else %}
+                                            <span class="pull-left">present</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div id="user-work-edit" class="col-md-7 col-md-offset-1"
+                    {% if profile_exists %} style="display:none;" {% endif %}>
+                    <div class="row">
+                        <div style="border-radius:4px; margin-top:2px; padding:0px;"
+                            class="col-md-12 col-md-offset-0">
+                            <form id="user-add-education-form" class="form-image"
+                                action="{% url 'view-profile' %}" method="post"
+                                style="padding:10px 15px;margin:0px; border:1px solid #ACA4A4;border-radius: 4px">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="company col-md-7" style="padding-right: 2px;">
+                                        {{ add_work_form.form_method }}
+                                        {{ add_work_form.company }}
+                                    </div>
+                                    <div class="col-md-5" style="padding-left: 2px;">
+                                        {{ add_work_form.position }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ add_work_form.description }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="padding-right:0px">
+                                        {{ add_work_form.start_date }}
+                                        <span class="text-center pull-right" style="padding:10px 0px; margin:0px">
+                                            <strong> {{ add_work_form.end_date.label}} </strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6" style="padding-left:0px;">
+                                        <span class="pull-right">{{ add_work_form.end_date }} </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                {% if profile_exists %}
+                                    <div class="col-md-4 col-md-offset-2">
+                                        <button type="button" class="btn btn-danger pull-left"
+                                            onclick="editDetail('user-work-edit', 'user-work')">Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 col-md-offset-2" >
+                                {% else %}
+                                    <div class="col-md-4 col-md-offset-8" >
+                                {% endif %}
+                                        <button type="submit" class="btn btn-primary pull-left">Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% for work in work_list %}
+                            <div class="row">
+                                <div class="col-md-9 col-md-offset-1"
+                                    style="border:1px solid #B8B8B8; border-radius:4px; margin-top:2px; padding:0px;">
+                                    <div class="row" style="border-bottom: 1px solid #BABABA; margin: 0px 0px;
+                                        border-spacing: 0px">
+                                        <div class="col-md-3 col-md-offset-0" style="padding-left:0px;">
+                                            <span class="input-group-addon" style="background-color: #84B0FF">
+                                                Worked as
+                                            </span>
+                                        </div>
+                                        <div class="col-md-8 col-md-offset-0">
+                                            <span class="input-group-addon" style="background-color: white; border:0px">
+                                                {{ work.position }} </span>
+                                        </div>
+                                        <div id="user-work-{{ work.id }}-delete" style="padding-top: 2px;"
+                                            class="col-md-1">
+                                            <form id="{{ work.id }}-delete-form" class="form-image"
+                                                action="{% url 'view-profile' %}" method="post">
+                                                {% csrf_token %}
+                                                <input id="id_form_method" name="form_method" type="hidden"
+                                                    value="remove_work">
+                                                <input id="id_work_id" name="work_id" type="hidden"
+                                                    value="{{ work.id }}">
+                                                <button type="submit" class="btn btn-danger pull-right"
+                                                    style="padding: 0 2px;">
+                                                    <span class="glyphicon glyphicon-trash"> </span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="border-bottom: 1px solid #BABABA; margin: 0px 0px;
+                                        border-spacing: 0px">
+                                        <div class="col-md-3 col-md-offset-0" style="padding-left:0px;">
+                                            <span class="input-group-addon" style="background-color: #84B0FF">
+                                                In
+                                            </span>
+                                        </div>
+                                        <div class="col-md-9 col-md-offset-0">
+                                            <span class="input-group-addon" style="background-color: white; border:0px">
+                                                {{ work.company }} </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-md-offset-0">
+                                            <span style="display:block; text-align:center;"> {{ work.description }} </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div id="user-work-{{ work.id }}-start-date" class="col-md-5">
+                                            <span class="pull-right">{{ work.start_date }}</span>
+                                        </div>
+                                        <div id="user-work-{{ work.id }}-start-date" class="col-md-2">
+                                            <p class="text-center">to</p>
+                                        </div>
+                                        <div id="user-work-{{ work.id }}-start-date" class="col-md-5">
+                                            {% if work.end_date %}
+                                                <span class="pull-left">{{ work.end_date }}</span>
+                                            {% else %}
+                                                <span class="pull-left">present</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-row row">
+        <div class="row-data col-md-10 col-md-offset-1">
+            <div class="profile-heading col-md-3 col-md-offset-1">
+                <h3 class="text-center"> Social Networks </h3>
+            </div>
+            <div id='user-social' class="col-md-6 col-md-offset-2 profile-info"
+                {% if profile_exists == False %} style="display:none;" {% endif %}>
+
+                <div id="edit-social" class="edit-button">
+                    <a href="#" onclick="editDetail('user-social', 'user-social-edit')"
+                        class="btn btn-info btn-sm">
+                    <span class="glyphicon glyphicon-edit icon" style="padding-right:5px;"></span>
+                        Edit !
+                    </a>
+                </div>
+
+                <img src="{{ STATIC_URL }}elearning_academy/img/twitter-white.png"
+                    style="width:24px;height:24px;margin:10px">
+                {% if website_twitter %}
+                    <a href="http://twitter.com/{{ website_twitter }}" target="_blank">
+                        {{ website_twitter }} </a>
+                {% else %}
+                    <em> Add your twitter profile </em>
+                {% endif %}
+                <br />
+                <img src="{{ STATIC_URL }}elearning_academy/img/facebook.png"
+                    style="width:24px;height:24px;margin:10px">
+                {% if website_facebook %}
+                    <a href="http://facebook.com/{{ website_twitter }}" target="_blank">
+                        {{ website_facebook }} </a>
+                {% else %}
+                    <em> Add your Facebook profile </em>
+                {% endif %}
+            </div>
+            <div id="user-social-edit" class="col-md-6 col-md-offset-2 profile-info"
+                {% if profile_exists %} style="display:none;" {% endif %}>
+                <form class="form-image" action="{% url 'view-profile' %}" method="post"
+                    style="padding:10px 15px 10px 15px;margin:0px"> {% csrf_token %}
+                    {{ social_form.form_method }}
+                    <div class="input-group" style="border-spacing:0px;margin:5px">
+                        <span class="input-group-addon" style="background-color:#B5E4FF">
+                            https://www.twitter.com/</span>
+                        {{ social_form.twitter }}
+                    </div>
+                    <div class="input-group" style="border-spacing:0px;margin:5px">
+                        <span class="input-group-addon" style="background-color:#3276b1;color:white;">
+                            https://www.facebook.com/</span>
+                        {{ social_form.facebook }}
+                    </div>
+                    <br />
+                    <div class="row">
+                    {% if profile_exists %}
+                        <div class="col-md-4 col-md-offset-2">
+                        <button type="button" class="btn btn-danger pull-left"
+                            onclick="editDetail('user-social-edit', 'user-social')">Cancel</button>
+                        </div>
+                        <div class="col-md-4 col-md-offset-2" >
+                    {% else %}
+                        <div class="col-md-4 col-md-offset-8" >
+                    {% endif %}
+                            <button type="submit" class="btn btn-primary pull-left">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editImageModal" tabindex=-1 role="dialog"
+    aria-labelledby="editImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Upload Image</h4>
+            </div>
+            <div class="modal-body" style="overflow:auto;">
+                <form class="form-image" action="{% url 'view-profile' %}" method="post" enctype="multipart/form-data" style="padding:10px 15px 10px 15px;margin:0px"> {% csrf_token %}
+                    <table>{{ image_form.as_table }}</table>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block jsLinks %}
+
+<script src="../../static/user_profile/js/typeahead.min.js"></script>
+
+<script type="text/javascript">
+    $("#user-photo img").hover(function() {
+        $("#edit-photo").fadeIn();
+    },function() {
+        $("#edit-photo").hide();
+    });
+    $("#edit-photo").mouseover(function() {
+        $(this).show();
+    });
+
+    $("#user-intro").hover(function() {
+        $("#edit-intro").fadeIn();
+    }, function() {
+        $("#edit-intro").hide();
+    });
+    $("#edit-intro").mouseover(function() {
+        $(this).show();
+    });
+
+    $("#user-personal").hover(function() {
+        $("#edit-personal").fadeIn();
+    }, function() {
+        $("#edit-personal").hide();
+    });
+    $("#edit-personal").mouseover(function() {
+        $(this).show();
+    });
+
+    $("#user-education").hover(function() {
+        $("#edit-education").fadeIn();
+    }, function() {
+        $("#edit-education").hide()
+    });
+    $("#edit-education").mouseover(function() {
+        $(this).show();
+    })
+
+    $("#user-work").hover(function() {
+        $("#edit-work").fadeIn();
+    }, function() {
+        $("#edit-work").hide()
+    });
+    $("#edit-work").mouseover(function() {
+        $(this).show();
+    })
+
+    $("#user-social").hover(function() {
+        $("#edit-social").fadeIn();
+    }, function() {
+        $("#edit-social").hide();
+    });
+    $("#edit-social").mouseover(function() {
+        $(this).show();
+    });
+
+    $(".college .typeahead").typeahead([
+        {
+            prefetch: {
+                url: "{% url 'data' 'college'%}",
+                ttl: 0
+            },
+            limit: 5
+        }
+    ])
+
+    $(".major .typeahead").typeahead([
+        {
+            prefetch: {
+                url: "{% url 'data' 'major'%}",
+                ttl: 0
+            },
+            limit: 5
+        }
+    ])
+
+    $(".company .typeahead").typeahead([
+        {
+            prefetch: {
+                url: "{% url 'data' 'company' %}",
+                ttl: 0
+            },
+            limit: 5
+        }
+    ])
+
+    $("#user-add-education-form").submit( function( event ) {
+/*
+        select_objects = $(this).find("select")
+
+        start_month = select_objects[1]
+        start_day = select_objects[2]
+        start_year = select_objects[3]
+
+        console.log(select_objects.length)
+        event.preventDefault();
+*/
+    });
+
+    function editDetail(divName1, divName2) {
+        console.log("Hiding " + divName1 + " and showing " + divName2)
+        $("#"+divName1).hide();
+        $("#"+divName2).show();
+    }
+
+</script>
+
+{% endblock %}
+
+{% block cssLinks %}
+
+<style type="text/css">
+
+    #error {
+        text-align: center;
+    }
+
+    .alert {
+        padding:10px;
+    }
+
+    .dropdown-date {
+        width:auto;
+        font-size:x-small;
+        padding:7px 8px;
+        line-height:normal;
+        margin-top:5px;
+    }
+
+    .update-button {
+        position: absolute;
+        right: 0;
+        width:60px;
+        height:30px;
+        margin:10px 10px;
+    }
+
+    .edit-button {
+        display: none;
+        position: absolute;
+        right: 0;
+        width: 60px;
+        height: 30px;
+        margin: 10px 10px;
+    }
+
+    .edit-image-button {
+        display: none;
+        position: absolute;
+        bottom: 0;
+        height:30px;
+        margin:10px 10px;
+    }
+
+    #user-photo {
+        position:relative;
+        padding-top:15px;
+    }
+
+    .profile-row {
+        margin:0px;
+        padding:10px inherit;
+    }
+
+    .row-data {
+        border-top:1px solid;
+        border-color:gray;
+        border-spacing:2px;
+    }
+
+    .profile-info {
+        padding-top:5px;
+    }
+
+    .profile-image {
+        width: 270px;
+    }
+
+    .user-name {
+        font-size: 36px;
+    }
+
+    .user-about {
+        word-wrap: "break-word"
+    }
+
+    .form-image label {
+        padding:5px 10px 5px 10px;
+        margin:5px 10px;
+    }
+
+    .table {
+        margin:0px;
+        width:80%;
+    }
+
+    .table td, .table th {
+        border-top:none !important;
+    }
+
+    .table td {
+        text-align:center;
+    }
+
+    .hidden {
+        display:none;
+    }
+
+    .typeahead, .tt-query, .tt-hint {
+      padding: 6px 12px;
+      outline: none;
+    }
+
+    .typeahead {
+      background-color: #fff;
+    }
+
+    .tt-query {
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+         -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
+
+    .tt-hint {
+        width:100%;
+        color: #999;
+        border:1px solid white !important;
+    }
+
+    .tt-dropdown-menu {
+      width: 100%;
+      margin-top: 0px;
+      padding: 8px 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 4px;
+         -moz-border-radius: 4px;
+              border-radius: 4px;
+      -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+         -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+              box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    }
+
+    .tt-suggestion {
+      padding: 3px 20px;
+    }
+
+    .tt-suggestion.tt-is-under-cursor {
+      color: #fff;
+      background-color: #0097cf;
+
+    }
+
+    .tt-suggestion p {
+      margin: 0;
+    }
+
+    .twitter-typeahead {
+        width:100%;
+    }
+
+</style>
+
+{% endblock %}

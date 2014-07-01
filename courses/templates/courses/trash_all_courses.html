@@ -1,0 +1,22 @@
+{% extends 'courses/base_courses.html' %}
+
+{% block title %}Available Courses{% endblock %}
+
+{% block sidebar %}
+<h4>Available Courses</h4>
+{% endblock%}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li class="active">Available Courses</li>
+	</ul>
+</div>
+{% if courses %}
+<ul>
+	{% for acourse in courses %}
+	    <li><a href="{% url 'assignments_index' acourse.id %}">{{ acourse.id }}, {{ acourse.title }}</a></li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

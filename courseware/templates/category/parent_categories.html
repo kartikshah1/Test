@@ -1,0 +1,40 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{%block title %}Home{% endblock %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/grid_template.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/grid_template.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    /*React.renderComponent(
+        <MajorList 
+            myurl="parent_category/?"
+            suburl="category/"
+            subsuburl="parent="
+            hrefpath=""
+            subhpath="/category"
+            coursepage="2"
+            heading="Major fields of study" 
+            description="Select which field you want to study!!!"/>,
+        document.getElementById('main-container')
+        );*/
+
+
+    React.renderComponent(
+        <CourseList 
+            subhpath="/course"
+            coursepage="2"
+            heading="Major fields of study" 
+            description="Select a field to enrol/view"/>,
+        document.getElementById('main-container')
+        );
+</script>
+{% endblock %}
+
+{% block body %}
+{% endblock %}

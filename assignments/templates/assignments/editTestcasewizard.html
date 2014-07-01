@@ -1,0 +1,62 @@
+{% extends 'assignments/assignments_base.html' %}
+
+{% load i18n %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block sidebar %}
+	<p class="lead">Assignment Details</p>
+	<hr>
+	<p>Deadline: {{ testcase.program.assignment.deadline }}</p>
+	<p>Programming Language: {{ testcase.program.assignment.program_language }}</p>
+	<p>Files in submission: {{ testcase.program.assignment.student_program_files }}</p>
+	<p>Model solution: {% if not testcase.program.assignment.model_solution %}NOT{% endif %} AVAILABLE</p>
+	<p>Description: {{ testcase.program.assignment.description }}</p>
+
+	<p class="lead">Section Details</p>
+	<hr>
+	{% if compiler_command %}
+	<p>Compiler Command: {{ compiler_command }}</p>
+	{% endif %}
+	{% if execution_command %}
+	<p>Execution Command: {{ execution_command }}</p>
+	{% endif %}
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' testcase.program.assignment.course.id %}">{{ testcase.program.assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' testcase.program.assignment.id %}">{{ testcase.program.assignment.name }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_detailsprogram' testcase.program.id %}">{{ testcase.program.title }}</a> <span class="divider">/</span></li>
+		<li class="active">Edit Testcase</li>
+	</ul>
+</div>
+<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+<fieldset>
+	<legend>Edit Testcase Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</legend>
+<table>
+{{ wizard.management_form }}
+{% if wizard.form.forms %}
+    {{ wizard.form.management_form }}
+    {% for form in wizard.form.forms %}
+    <table class="table">
+        {{ form.as_table }}
+    </table>
+    {% endfor %}
+{% else %}
+	<table class="table">
+    {{ wizard.form.as_table }}
+    </table>
+{% endif %}
+</table>
+{% if wizard.steps.prev %}
+<button class="btn btn-large btn-info" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button class="btn btn-large btn-info" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+<input class="btn btn-large btn-info" type="submit" value="{% trans "Next" %}"/>
+</fieldset>
+</form>
+{% endblock %}

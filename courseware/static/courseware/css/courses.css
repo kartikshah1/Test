@@ -1,0 +1,339 @@
+/*Course Page related css*/
+
+.course-text-mute {
+    font-size: 12px;
+    color: #8f8f8f;
+}
+
+#courseBar {
+}
+
+.courseTitle {
+  font-size: 28px;
+  font-weight: ;
+  margin-bottom: 10px;
+  margin-left: 0px;
+}
+
+.courseContainer {
+  border-top: 1px solid #e4e4e4;
+  overflow: visible;
+}
+
+.courseSidebar {
+}
+
+.courseBody {
+  padding-top: 20px;
+  padding-left: 25px;
+  overflow: auto;
+  border:1px solid #e4e4e4;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+  -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+  box-shadow: 0 1px 4px rgba(0,0,0,.065);
+  border-top: 0px;
+  min-height: 600px;
+}
+
+.courseLinks {
+  padding: 0px;
+  margin: 0px;
+  font-size: 16px;
+}
+
+.courseLinks > li {
+  cursor: pointer;
+  margin: 0px;
+  list-style-type: none;
+  color: #3f3f3f;
+  padding: 10px 20px;
+  display: block;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+.courseLinks > li:hover {
+  color: #fff;
+  background-color: #557E7B;
+}
+
+.selectedLink {
+  position: relative;
+  background-color: rgba(147, 176, 219, 0.66);
+}
+
+.selecteLink > span {
+  position: absolute;
+  width: 20px;
+  height: 40px;
+  background: black;
+  right: 0px;
+  top: 5px;
+}
+
+.innerContainer {
+  padding: 20px 40px 20px 40px;
+  position: relative;
+}
+
+.mydocument > div> h1, .mydocument > div > h2, .mydocument > div > h3, .mydocument >  div > h4 {
+  border-bottom: 1px solid #cfcfcf;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.section > div > h4 {
+  border-bottom: 1px solid #cfcfcf;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+#sideList {
+  overflow: auto;
+}
+
+#sortablesections {
+  list-style-type: none;
+  overflow: auto;
+  padding-left: 0px;
+}
+
+.mynavbar-search {
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.mynavbar-search .mysearch-query {
+  padding: 4px 14px;
+  margin-bottom: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-border-radius: 7px;
+     -moz-border-radius: 7px;
+          border-radius: 7px;
+}
+
+.addPageButton {
+  background-color: #1F9789;
+  border-color: #1F9789;
+  color: white !important;
+}
+
+.addPageButton:hover {
+  background-color: rgba(29, 83, 100, 0.91) !important;
+  border-color: rgba(29, 83, 100, 0.91);
+}
+
+.addSectionButton {
+  color: white !important;
+  background-color: #1F9789;
+  border-color: #1F9789;
+}
+
+.addSectionButton:hover {
+  background-color: rgba(29, 83, 100, 0.91) !important;
+  border-color: rgba(29, 83, 100, 0.91);
+}
+
+#accordion {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+#groups {
+  overflow: auto;
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.group {
+  list-style-type: none;
+  margin-bottom: 3px;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.group-heading {
+  position: relative;
+  cursor: pointer;
+  border-bottom: 0;
+  padding-left: 10px;
+  color: #0088cc;
+  border-bottom: 0px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 19px;
+  font-family: verdana;
+  text-transform: capitalize;
+}
+
+.group-heading > h4:hover {
+  color: green;
+}
+
+.group-inner {
+  list-style-type: none;
+  padding: 9px 22px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.content-topbar {
+  display: inline;
+}
+
+.addgroup-button {
+  margin-top: 15px;
+  margin-right: 12px;
+  width: 82%;
+  background-color: #1F9789;
+  border-color: #1F9789;
+  color: white !important;
+}
+
+.addgroup-button:hover {
+  background-color: rgba(29, 83, 100, 0.91) !important;
+  border-color: rgba(29, 83, 100, 0.91);
+}
+
+.icon {
+  padding: 0px 5px 0px 14px;
+  cursor: pointer;
+}
+
+.sort-btn {
+  margin-left: 15px;
+}
+
+.group-sort-btn {
+  margin-right: 15px;
+  margin-bottom: 20px;
+}
+
+.pagesort-btn {
+  border: 1px dashed black;
+  background-image: url('/static/elearning_academy/img/grippy_large.png');
+  background-repeat: repeat;
+  font-weight: bold;
+}
+
+.pagesort-btn:hover {
+  border: 1px dashed black;
+  background-image: url('/static/elearning_academy/img/grippy_large.png');
+  background-repeat: repeat;
+  font-weight: bold;
+  background-color: #aaaaaa !important;
+  color: black !important;
+}
+
+.sortable-items {
+  background-image: url('/static/elearning_academy/img/grippy_large.png');
+  background-repeat: repeat-y;
+}
+
+.state-highlight {
+  border: 2px solid #1D642B;
+  border-style: dashed;
+}
+
+.state-movable {
+  border: 2px solid #aaa;
+  border-style: dashed;
+  opacity: 0.5;
+}
+
+.muted {
+  color: #2B2222;
+  font-size: 13px;
+  font-style: italic;
+}
+
+a.muted:hover,
+a.muted:focus {
+  color: #808080;
+}
+
+.concepts {
+  list-style-type: none;
+  padding-left: 0px;
+  color: #428bca;
+  padding-top: 10px;
+}
+
+.publish-text {
+  font-size: 10 !important;
+}
+
+.concept {
+  color: rgb(75, 70, 70) !important;
+  list-style-type: none;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 2px;
+  color: black;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-color: white;
+  border-style: solid;
+}
+
+.concept-title {
+  text-transform: capitalize;
+  font-size: 18px;
+}
+
+.concept-title > a {
+  color: rgb(44, 152, 156);
+}
+
+.concept > a {
+  color: rgb(75, 70, 70) !important;
+  cursor: pointer;
+}
+
+.concept:hover {
+  /*border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-color: #e4e4e4;
+  border-style: solid;*/
+  background-color: #f5f5f5;
+}
+
+/** Styling for public course info page */
+
+.enrollbtn{   color: #fff;   background-color: #51be51;   border-color:
+#43b343;     margin-left: 15px;   margin-top : 30px; }
+
+
+.progressbar-text {
+  text-align: center;;
+  color: black;
+}
+
+.no-margin {
+  margin: 0px;
+}
+
+#assignmentLink {
+	color: #3F3F3F;
+}
+
+#assignmentLink:hover {
+	color: white;
+	text-decoration: none;
+}
+

@@ -1,0 +1,368 @@
+/*************************/
+/* React Class Concept */
+
+#course-title {
+	margin-top: 0;
+}
+
+#course-title > a {
+	color: #000000;
+}
+
+#course-title a:hover,
+a:focus {
+  color: #428bca;
+  text-decoration: none;
+}
+
+/*********** Concept Breadcrumb ********/
+
+.concept-breadcrumb {
+	margin-bottom: 0px;
+	border-radius: 0px;
+	font-size: 16px;
+	padding-bottom: 0;
+	padding-left: 0;
+}
+
+.concept-breadcrumb > li {
+	padding-bottom: 8px;
+}
+
+.concept-breadcrumb >li:first-child {
+	padding-left: 15px;
+}
+
+
+
+#concept-breadcrumb-caret {
+	font-size: 14px;
+}
+
+#concept-breadcrumb-caret:before {
+	padding: 0;
+	content: "";
+}
+
+#concept-breadcrumb-caret > a {
+	display: block;
+	text-align: center;
+	width:22px;
+	padding-right:1px;
+}
+
+#concept-breadcrumb-caret > a:hover {
+	background-color: #ccc;
+	border: 1px solid #aaa;
+}
+
+.concept-breadcrumb .dropdown-header {
+	font-size: 14px;
+	padding-top: 2px;
+	padding-bottom: 0;
+	color: #333;
+}
+
+.concept-breadcrumb .divider {
+	margin: 7px 0;
+}
+
+.concept-breadcrumb .dropdown-menu > li > span {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #999;
+  white-space: nowrap;
+}
+
+.concept-breadcrumb .dropdown-menu{
+	border-radius: 0;
+	margin-top: 0;
+	border: 1px solid #ddd;
+	margin-left: -1px;
+}
+
+.concept-breadcrumb > .active{
+	color: #444;
+}
+
+.concept-breadcrumb > li {
+	position: relative;
+}
+
+/*********** END  ********/
+
+/********* Concept Info Panel **********/
+
+#concept-info-panel {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+#concept-info-panel .panel-heading {
+	padding: 0;
+}
+
+#concept-info-panel .panel-footer {
+	padding: 0;
+	border-top-width: 0;
+}
+
+#concept-info-body {
+	padding-top: 0;
+	border-bottom: 1px solid #ddd;
+}
+
+/********* END  *******/
+
+
+
+.concept-breadcrumb .dropdown:hover .dropdown-menu{
+	display: block;
+}
+
+
+
+
+/*********** End React Class Concept ********/
+/*******************************************/
+
+
+
+
+
+/***********************************/
+/*      React Class Concept Details   */
+
+
+
+
+#concept-details {
+	margin-top: 15px;
+}
+
+#concept-details .concept-image {
+	max-width: 300px;
+	width: auto;
+	height: auto;
+}
+
+#concept-details-prev {
+	margin-left: 15px;
+}
+
+#concept-details-next {
+	margin-right: 15px;
+}
+
+#concept-details .concept-image{
+	text-align: center;
+	margin-left: 10px;
+}
+
+#concept-details .concept-summary {
+	display: block;
+	text-align: justify;
+}
+
+#concept-details > ul > li {
+	margin-bottom: 25px;
+}
+
+#concept-details > ul > li > h4{
+	font-weight: bold;
+}
+
+
+/*     END React Class Concept Details   */
+/****************************************/
+
+/***** Class ConceptLearningElement */
+
+#concept-learning-element {
+	margin-top: 15px;
+}
+
+/*      END ConceptLearningElement */
+
+
+/******* Concept Document *********/
+
+.concept-document .concept-document-title {
+	margin-bottom: 15px;
+	margin-top : 40px;
+}
+
+.concept-document .concept-document-title h3{
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.concept-document > ul > li {
+	margin-bottom: 15px;
+}
+
+.concept-document > ul > li > h4{
+	font-weight: bold;
+}
+
+.concept-document p {
+	text-align: justify;
+}
+
+
+
+/* END Concept Document */
+
+
+
+
+
+.concept-video {
+	width: 854px;
+	min-height: 480px;
+
+}
+
+#concept-video-frame {
+	border-width: 0;
+}
+
+.concept-video-toc {
+	width: 100%;
+	padding-right: 10px;
+}
+
+
+
+
+.concept-playlist {
+	display: table;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.concept-playlist > li {
+	display: table-cell;
+	padding: 0px;
+}
+
+.concept-playlist > li:not(:first-child) > div {
+	border-left-width: 1px solid #dddddd;
+}
+
+.concept-playlist > li + li {
+	border-left: 1px solid #dddddd;
+}
+
+.concept-video-area {
+	margin: 0px;
+	padding: 10px 0px;
+}
+
+.concept-video {
+	float: right;
+}
+
+.concept-video-toc > h4 {
+	margin: 6px 0;
+}
+
+.concept-video .question-metadata {
+	display: none;
+}
+
+
+/****** Style for ConceptPlaylistItem ********/
+
+.concept-playlist-item {
+	height: 20px;
+}
+
+.concept-playlist-item a.seen{
+	background-color: #83baeb;
+}
+
+.concept-playlist-item a.current{
+	background-color: orange;
+}
+
+.concept-playlist-item a:hover {
+	background-color: #a8ccec;
+}
+
+.concept-playlist-item a:hover.current {
+	background-color: orange;
+}
+
+.concept-playlist-item a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: #f5f5f5;
+	text-align:center;
+	color:#777;
+}
+
+.concept-playlist-item a.highlight{
+	background-color: #a8ccec;
+}
+
+/*************************************/
+
+
+
+
+
+
+/**** Related to Quiz ****/
+
+
+
+/** end of quiz ****/
+
+
+.concept-document {
+	border: 1px solid rgb(221,221,221);
+	padding: 0 15px;
+}
+
+
+
+
+
+
+
+
+/*
+
+#toc {
+	float: left;
+	width: 250px;
+}
+
+#video {
+	float: right;
+	width: 854px;
+}
+
+#video-utils {
+	vertical-align: bottom;
+}
+
+.popover {
+	border-radius: 0;
+}
+
+.in-video-quiz {
+	margin-top: -6px;
+}
+
+*/

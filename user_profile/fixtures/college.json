@@ -1,0 +1,51 @@
+[
+    {
+        "model": "user_profile.College",
+        "pk": 1,
+        "fields": {
+            "college" : "Indian Institute of Technology, Bombay"
+        }
+    },
+    {
+        "model": "user_profile.College",
+        "pk": 2,
+        "fields": {
+            "college" : "Indian Institute of Technology, Delhi"
+        }
+    },
+    {
+        "model": "user_profile.College",
+        "pk": 3,
+        "fields": {
+            "college" : "Indian Institute of Technology, Kanpur"
+        }
+    },
+    {
+        "model": "user_profile.College",
+        "pk": 4,
+        "fields": {
+            "college" : "Indian Institute of Technology, Roorkee"
+        }
+    },
+    {
+        "model": "user_profile.College",
+        "pk": 5,
+        "fields": {
+            "college" : "Indian Institute of Technology, Kharagpur"
+        }
+    },
+    {
+        "model": "user_profile.College",
+        "pk": 6,
+        "fields": {
+            "college" : "Indian Institute of Technology, Madras"
+        }
+    },
+    {
+        "model": "user_profile.College",
+        "pk": 7,
+        "fields": {
+            "college" : "Indian Institute of Technology, Guwahati"
+        }
+    }
+]

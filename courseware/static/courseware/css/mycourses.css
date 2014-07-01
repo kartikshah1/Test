@@ -1,0 +1,118 @@
+/* Author : Shrikant Nagori */
+/*My Course Page related css*/
+
+
+.courseContainer {
+  border-top: 1px solid ;
+  overflow: visible;
+}
+
+.mycourseTitle {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	text-transform: uppercase;
+	font-family: normal 1em/1em "Open Sans",Verdana,Geneva,Arial,sans-serif;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	cursor: pointer;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 0px;
+	color: #1192bf;
+}
+
+.mycourseList {
+	color: rgb(34, 34, 34);
+	display: block;
+	font-family: "Open Sans",Verdana,Geneva,sans-serif,sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	line-height: 16px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	text-indent: 0px;
+	width: 640px;
+}
+
+.mycourseLink{
+	padding-top: 7px;
+	font-family: Karla,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+	position:relative;
+	z-index: 20;
+}
+
+.mycourseHeading {
+	padding-top: 10px;
+	padding-left: 20px;
+	font-family:"sofiapro-medium",Arial,sans-serif	;
+	font-size: 14px;
+} 
+
+.mycourseBox{	
+	margin-top: 15px;
+	margin-bottom: 15px;
+	padding-left: 30px;
+	padding-top: 1px;
+	background-color:#F3F3F2;	
+}
+
+
+.mycourseActions{
+	cursor: pointer;
+	font-size: 14px;
+	color: #0367b0;
+	padding-bottom: 20px;
+	vertical-align:text-bottom;
+}
+
+a:hover{
+	text-decoration: none ;
+}
+
+a[disabled="disabled"] {
+	color: #23386E;
+	border-color: #43b343 !important;
+	background-color: #51be51 !important;
+}
+
+.mybtn{
+	color: #fff;
+	background-color: #51be51;
+	border-color: #43b343;	
+}
+
+.mybtn:hover {
+	color: #23386E;
+	background-color: #51be51;
+	border-color: #43b343;
+}
+.pgbar{
+	width : "0%";
+}
+
+.pgdiv{
+	padding-left: -15px;
+	padding-bottom: -15px;
+}
+
+.progress {
+	height: 10px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+.mycourseProgress {
+	color: #A52A2A;
+	position: relative;
+}
+
+.mycourseDate{
+	padding-top: 10px;
+	font-family:"sofiapro-medium",Arial,sans-serif	;
+	font-size: 14px;
+}

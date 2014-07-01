@@ -1,0 +1,32 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/courses.css" rel="stylesheet">
+<link href="{{STATIC_URL}}discussion_forum/css/forum.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/course/public_course_info.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+   		< CourseBody course='{{course}}'/>, document.getElementById('courseBody')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+    <div id="courseBar" class="row">
+        <div class="col-md-6 courseTitle">
+            {{ title|title }}
+        </div>
+    </div>
+    <div id="courseBar" class="row">
+   		<div class="col-md-6 courseDescription">
+        	{{ course_info.description }}
+    	</div>
+    </div>
+    <div id="courseBody" class="row courseContainer">
+    </div>
+
+{% endblock %}

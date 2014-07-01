@@ -1,0 +1,20 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}progress/js/progress_entities.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}progress/js/student/progress.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+        <Progress course = '{{courseId}}' />, document.getElementById('progressBody')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+
+    <div id="progressBody" class="row">
+    </div>
+
+{% endblock %}

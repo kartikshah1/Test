@@ -1,0 +1,87 @@
+{% extends 'evaluate/evaluate_base.html' %}
+{% load evaluatetags %}
+
+{% block title %}{{ assignment.name }} Results{% endblock %}
+
+{% block sidebar %}
+<h4>Practice test cases</h4>
+	{% if is_student %}
+		<!-- <a href="{% url 'cribs_createcrib' assignment.id %}">Register Crib</a> -->
+	{% endif %}
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Results</li>
+	</ul>
+</div>
+	<h4>Practice-Tests results for Assignment {{ assignment.serial_number }} {{ assignment.name }}</h4>
+	<div class="span12">
+	{% for prgrm in results.program_results %}
+		<h5 style="color:green;">{{ prgrm.program_result.program.name }}</h5>
+			{% if prgrm.program_result.missing_file_names %}
+				<div class="accordion" id="accordion{{ prgrm.program_result.program.id }}pro">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+        					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ prgrm.program_result.program.id }}pro" href="#collapse{{ prgrm.program_result.program.id }}innerpro">
+          						Files are not found.
+        					</a>
+      					</div>
+      					<div id="collapse{{ prgrm.program_result.program.id }}innerpro" class="accordion-body collapse">
+        					<div style="padding-left:40px" class="accordion-inner">
+        						<div class="row">
+	        						<h5>Bad configuration for this section. We couldn't find following files -</h5>
+	        						{{ prgrm.program_result.missing_file_names }} <br/>
+	        						<h5>Your tar contains following files -</h5>
+	        						{{ results.assignment_result.submitted_files|linebreaksbr }}
+								</div>
+        					</div>
+        				</div>
+					</div>
+				</div>
+			{% elif prgrm.program_result.compiler_return_code == 0 %}
+				<div class="accordion" id="accordion{{ prgrm.program_result.program.id }}pro">
+					{% if prgrm.testResults %}
+						{% for tst in prgrm.testResults %}
+							{% include "evaluate/practice_run_messages.html" %}
+						{% endfor %}
+					{% else %}
+					<div class="accordion" id="accordion{{ prgrm.program_result.program.id }}pro">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+        					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ prgrm.program_result.program.id }}pro" href="#collapse{{ prgrm.program_result.program.id }}innerpro">
+          						No Practice test-cases were found for this section.
+        					</a>
+      					</div>
+      					
+					</div>
+				</div>
+					{% endif %}
+				</div>
+			{% else %}
+				<div class="accordion" id="accordion{{ prgrm.program_result.program.id }}pro">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+        					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ prgrm.program_result.program.id }}pro" href="#collapse{{ prgrm.program_result.program.id }}innerpro">
+          						Compilation Failed.
+        					</a>
+      					</div>
+      					<div id="collapse{{ prgrm.program_result.program.id }}innerpro" class="accordion-body collapse">
+        					<div style="padding-left:40px" class="accordion-inner">
+        						<div class="row">
+	        						Compile command: {{ prgrm.compiler_command }}<br/>
+	        						Return Code: {{ prgrm.program_result.compiler_return_code }}<br/>
+	        						<h6 style="color:red;">Error Message</h6>
+									{{ prgrm.program_result.compiler_errors|linebreaksbr }}
+								</div>
+        					</div>
+        				</div>
+					</div>
+				</div>
+			{% endif %}
+	{% endfor %}
+	</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block title %} Concept Video Box {% endblock %}
+
+{% block jsLinks %}
+{# Video Js used to render video in HTML5 video tag #}
+<script src="{{STATIC_URL}}video-js/video.js" type="text/javascript"> </script>
+<script src="{{STATIC_URL}}video-js/video-speed.js" type="text/javascript"> </script>
+
+<script type="text/javascript" src="{{STATIC_URL}}video/js/video-player.js"> </script>
+
+{# JSX for content developer for concept video box #}
+<script src="{{STATIC_URL}}elearning_academy/js/react.min.js"> </script>
+<script type="text/jsx" src="{{STATIC_URL}}video/js/content_developer/concept_video_box.jsx"> </script>
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div id="concept" conceptId='1' class="col-md-12">
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block cssLinks %}
+<link rel=stylesheet href="{{STATIC_URL}}video/css/jquery-ui.css" type="text/css" />
+<link rel=stylesheet href="{{STATIC_URL}}video-js/video-js.css" type="text/css" />
+<link rel=stylesheet href="{{STATIC_URL}}video/css/concept_video_box.css" type="text/css" />
+{% endblock %}
+
+{% block jsScript %}
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    data={
+            "content": {
+                "id": 1,
+                "title": "Matrix - Definition",
+                "content": "A template is a text document, or a normal Python string, that is marked-up using the Django template language. A template can contain block tags or variables.",
+                "upvotes": 0,
+                "downvotes": 0,
+                "video_file": "/media/static/video/a.webm",
+                "markers": [
+                    {
+                        "id": 3,
+                        "video": 1,
+                        "time": 5,
+                        "type": "S",
+                        "title": "Marker 1"
+                    },
+                    {
+                        "id": 5,
+                        "video": 1,
+                        "time": 10,
+                        "type": "Q",
+                        "quiz": 1
+                    }
+                ]
+            },
+            "type": "video",
+            "history": {
+                "id": 1,
+                "video": 1,
+                "user": 1,
+                "seen_status": false,
+                "times_seen": 0,
+                "vote": "N"
+            }
+        }
+    React.renderComponent(<ConceptVideoBox data={data}/>, document.getElementById('concept'));
+</script>
+{% endblock %}

@@ -1,0 +1,124 @@
+
+.mytablefull{
+	display:table;
+	width: 100%;
+}
+
+.mytablerow{
+	display: table-row;
+}
+
+.mytablecell{
+	display: table-cell;
+	width:50%;
+	height: 100%;
+}
+
+
+
+.concept-section-edit-btns {
+	position: relative;
+}
+
+
+.concept-section-edit-btns > div > div{
+	position: absolute;
+	/*
+	bottom: 0;
+	margin-bottom: 15px;
+	*/
+	padding-top: 10px;
+	right: 0;
+}
+
+.concept-section-edit-btns > div > div >.btn {
+	margin-left: 10px;
+}
+
+
+.image-upload-box img{
+	max-width: 240px;
+}
+
+.image-upload-box .btn{
+	margin-right: 5px;
+	margin-bottom: 5px;
+	min-width: 77px;
+}
+
+.image-upload-box {
+	margin: 10px;
+}
+
+textarea.form-control {
+	/*min-height: 100px;*/
+}
+
+
+.add-learning-element {
+	padding: 30px 0;
+	margin-top: 10px;
+}
+
+.add-learning-element .control-btn .btn{
+	margin-left: 10px;
+	min-width: 77px;
+}
+
+
+.add-learning-element .fileinput-filename {
+	margin-left: 5px;
+}
+
+.concept-learning-elements .elements-control button{
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 20px;
+}
+
+
+#concept-info-panel .list-group-item{
+	margin-bottom: -2px;
+	padding-bottom: 20px;
+}
+
+#concept-info-panel .list-group-item:last-child{
+	margin-bottom: 0;
+}
+
+#concept-info-panel .list-group-item > h4 {
+	font-size: 20px;
+}
+
+
+.learning-element-control > .element-title{
+	width: 400px;
+	float: left;
+}
+
+.learning-element-control > .element-title > a{
+	width: 100%;
+	display: block;
+}
+
+.learning-element-control > .controls span.glyphicon {
+	margin-right: 10px;
+}
+
+.concept-learning-element-edit {
+	margin-top: 20px;
+}
+
+.concept-learning-element-edit .panel {
+	border-radius: 0;
+}
+
+.concept-document {
+	border: 1px solid rgb(221,221,221);
+	padding: 0 5px;
+}
+
+.concept-document-sections{
+	margin: 0 10px;
+	padding-bottom: 10px;
+}

@@ -1,0 +1,9 @@
+[
+    {
+        "model": "courseware.ParentCategory",
+        "pk": 1,
+        "fields": {
+            "title": "Computer Science"
+        }
+    },
+]

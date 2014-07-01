@@ -1,0 +1,15 @@
+{% extends "notification/root.html" %}
+
+{% block title %}Activate account by validating Email address{% endblock %}
+
+{% block cssLinks %}{% endblock %}
+
+{% block email_body %}
+<h2> Your {{MY_SITE_NAME}} account is almost ready ! </h2>
+Your username is {{username}}. New approach to education is just one step away.<br />
+Click the link below to confirm registration <br />
+{{MY_SERVER}}{% url 'activate' activation_key %} <br />
+If you have not registered with us then please ignore this mail. <br />
+Thanks <br />
+{{MY_SITE_NAME}}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'upload/upload_base.html' %}
+{% load assignmentTags %}
+
+{% block sidebar %}
+<h4>{{ assignment.course.name }}, {{ assignment.name }}</h4>
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url assignments_index course.id %}">{{ course.name }}</a> <span class="divider">/</span></li>
+		<li class="active">My Submissions</li>
+	</ul>
+</div>
+
+<div>
+	<h4>All submissions for Course: {{ course.name }}</h4>
+</div>
+
+<div>
+	<h5>Total submissions : {{ all_uploads|length }}</h5>
+</div>
+<table class="table table-striped">
+  <tr>
+  	<th title="Assignment Number">#</th>
+    <th title="Assignment Name">Assignment</th>
+    <th title="File submitted by you">File</th>
+    <th>Submitted on</th>
+  </tr>
+  {% for submission in all_uploads %}
+  <tr>
+  	<td>{{ submission.assignment.serial_number }}</td>
+    <td><a href="{% url assignments_details submission.assignment.id %}">{{ submission.assignment.name }}</a></td>
+    <td><a href="{{ submission.filePath.url }}">{{ submission.filePath|getfilename }}</a></a></td>
+    <td>{{ submission.uploaded_on|date:"H:i, M d, Y" }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

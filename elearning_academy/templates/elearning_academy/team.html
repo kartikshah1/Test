@@ -1,0 +1,118 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block title %}
+{{MY_SITE_NAME}}
+{% endblock %}
+
+{% block cssLinks %}
+    <style type="text/css">
+        .about {
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+        .about-header {
+            margin-bottom: 7px;
+        }
+        img {
+            margin-left: 25px;
+            margin-bottom:10px;
+            margin-top: 5px;
+        }
+        p {
+            text-align:justify;
+        }
+        .img-polaroid {
+            width: 200px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="about-header">
+            <span class="lead">{{MY_SITE_NAME}}</span><br/>
+            <span class="text-muted">Our Mission and Philosophy</span>
+        </div>
+        <p style="text-align:justify">
+            The state of technical education in India is rather poor. In many universities, courses are taught by just graduated students, who themselves have not experienced quality teaching. Some courses are often not even taught due to shortage of faculty. Students often have to study on their own. This has wide-spread ramifications. Students waste four precious years of their life with nothing much to show in the end. The companies that hire them have to provide their own training which can be a significant overhead (both in terms of time and money). The students that go on for Masters are often ill-equipped to carry out research and by the time training ends, they are ready to graduate. So, not much research is output.
+        </p>
+        <p style="text-align:justify">
+            The goal of this endeavour is to provide quality education to all, unlike so far where only a select few who have been fortunate enough to crack the highly competitive entrance exams could access. The hope is that this effort of ours will empower students, who equipped with quality technical education will go on to do impactful things for our society.
+        </p>
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="row">
+            <div class="about">
+                <img src="{{STATIC_URL}}elearning_academy/img/about/kameswari_chebrolu.jpg" class="img-polaroid pull-right">
+                <div class="about-header">
+                    <span class="lead"><a href="http://www.cse.iitb.ac.in/silmaril/chebrolu/doku.php" target="_blank">Kameswari Chebrolu</a></span><br/>
+                    <span class="text-muted">Founder</span><br/>
+                </div>
+                <p>
+                    Kameswari Chebrolu is an associate professor in the department of Computer Science and Engineering at IIT Bombay, India. Her research interests are in the areas of wireless, wired and sensor networks. In particular, she is interested in the design of protocols and architecture for network systems targeted towards deployment in the developing world. She is also passionate about teaching and is committed to making quality education material available to all.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="about">
+                <img src="{{STATIC_URL}}elearning_academy/img/about/saif_hasan.jpg" class="img-polaroid pull-right">
+                <div class="about-header">
+                    <span class="lead"><a href="https://facebook.com/saif" target="_blank">Saif Hasan</a></span><br/>
+                    <span class="text-muted">Chief Software Developer</span><br/>
+                </div>
+                <p>
+                    Saif recently pursued B.Tech in Computer Science from IIT Bombay. He is originally from a town in North Gujarat. His passion includes algorithmic coding, web development and mentoring. He will be joining Facebook soon at its headquater in Menlo Park, California.
+                </p>
+                <p>
+                    He has worked with Yahoo! Labs and Microsoft India Development Center as an intern. His is passionate about hiking and playing pool.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="about">
+                <img src="{{STATIC_URL}}elearning_academy/img/about/alankar_saxena.jpg" class="img-polaroid pull-right">
+                <div class="about-header">
+                    <span class="lead"><a href="https://www.facebook.com/alankar.saxena1" target="_blank">Alankar Saxena</a></span><br/>
+                    <span class="text-muted">Chief Software Developer</span><br/>
+                </div>
+                <p>
+                    Alankar recently pursued B.Tech in Computer Science from IIT Bombay. He is originally from a town in North Rajasthan. His passion includes algorithmic coding, web development and mentoring. He will be joining Twitter soon at its headquater in San Francisco, California.
+                </p>
+                <p>
+                    He has worked with Microsoft India Development Center as an intern.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="about">
+                <img src="{{STATIC_URL}}elearning_academy/img/about/aakash.jpg" class="img-polaroid pull-right">
+                <div class="about-header">
+                    <span class="lead"><a href="https://www.facebook.com/aakashns" target="_blank">Aakash Rao NS</a></span><br/>
+                    <span class="text-muted">Chief Software Developer</span><br/>
+                </div>
+                <p>
+                    Aakash recently pursued B.Tech in Computer Science from IIT Bombay. He is originally from Vishakhapatnam which is on the east coast of Andhra Pradesh. He represented India in the ACM ICPC World finals. Apart from algorithmic coding and theoretical computer science, his passion includes playing guitar and singing. He too will be joining Twitter soon at its headquater in San Francisco, California.
+                </p>
+                <p>
+                    He has worked in Oxford Brooks University in his summer intern.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="about">
+                <img src="{{STATIC_URL}}elearning_academy/img/about/vinayak.jpg" class="img-polaroid pull-right">
+                <div class="about-header">
+                    <span class="lead"><a href="https://www.facebook.com/gagrani.vinayak" target="_blank">Vinayak Gagrani</a></span><br/>
+                    <span class="text-muted">Chief Software Developer</span><br/>
+                </div>
+                <p>
+                    Vinayak recently pursued B.Tech in Computer Science from IIT Bombay. He is originally from Jaipur, Rajasthan. He represented Inida in the International Chemistry Olympiad and won a silver medal. His interests include algorithmic coding and machine learning. He also enjoys reading books, sketching and chatting with people. He too will be joining Twitter soon at its headquater in San Francisco, California.
+                </p>
+                <p>
+                    He has worked in INRIA France and Google India in his summer interns.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

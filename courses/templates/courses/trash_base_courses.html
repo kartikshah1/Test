@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+	{% if courseCreated %}
+	<h4>Course Created</h4>
+	<ul>
+	{% for course in courseCreated %}
+		<li><a href="{% url 'assignments_index' course.id %}">{{ course.id }} {{ course.title }}</a></li>
+	{% endfor %}
+	</ul>
+	{% else %}
+		<h4>No Course Created</h4>
+	{% endif %}
+
+	{% if courseJoined %}
+	<h4>Course Joined</h4>
+	<ul>
+	{% for course in courseJoined %}
+		<li><a href="{% url 'assignments_index' course.course.id %}">{{ course.course.id }} {{ course.course.title }}</a></li>
+	{% endfor %}
+	</ul>
+	{% else %}
+		<h4>No Course Joined</h4>
+	{% endif %}
+
+	{% block addtosidebar %}{% endblock %}
+{% endblock %}

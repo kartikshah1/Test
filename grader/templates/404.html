@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}<h2>{% trans "Page not found" %}</h2>{% endblock %}
+
+{% block main %}
+<p>{% trans "Page could not be found."%}</p>
+<p>{% trans "If you think this is a bug, please send and e-mail to developers." %}</p>
+{% endblock %}

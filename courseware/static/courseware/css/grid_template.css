@@ -1,0 +1,70 @@
+/*Content navigation*/
+.listrow {
+  margin-bottom: 15px;
+}
+
+.largeheading {
+  margin: 0px;
+  color: #fff;
+  padding: 10px 20px;
+  display: block;
+  text-decoration: none;
+  -webkit-border-radius: 7px;
+     -moz-border-radius: 7px;
+          border-radius: 7px;
+  background-color: rgba(109, 149, 207, 1);
+}
+
+.largeheading > h3 {
+  margin: 0px;
+  padding: 0px;
+}
+
+.largeheading:hover {
+  color: #fff;
+  background-color: #004466;
+}
+
+.smallheading {
+  margin: 2px 0px 0px 0px;
+  display: block;
+  text-decoration: none;
+  background-color: #004466;
+  color: #fff !important;
+}
+
+.smallheading > h5 {
+  margin: 0px;
+  padding: 0px;
+}
+
+.smallheading:hover {
+  background-color: #CF2D2D;
+}
+
+.sliders {
+  height:   200px;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.navigators {
+  height: 25px !important;
+  width: 25px;
+  border: none;
+}
+
+.mimage {
+  border:   0px;
+  height:   80% !important;
+  width:    100% !important;
+}
+
+.no-padding {
+    padding: 0px 0px 0px 0px;
+}
+
+.course-text-mute {
+    font-size: 12px;
+    color: #8f8f8f;
+}

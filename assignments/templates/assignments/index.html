@@ -1,0 +1,64 @@
+{% extends 'assignments/assignments_base.html' %}
+
+{% block title %}Assignments{% endblock %}
+
+{% block sidebar %}
+	{{ block.super }}
+{% endblock %}
+
+{% block main %}
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<div>
+	<ul class="breadcrumb">
+		<li class="active">{{ course.title }}</li>
+	</ul>
+</div>
+
+<style>
+	.info {width:150px; }
+	.edit-icon {background-image:url('{{ STATIC_URL }}img/edit.png'); background-repeat:no-repeat;}
+	.add-icon {background-image:url('{{ STATIC_URL }}img/add.png'); background-repeat:no-repeat;}
+	.delete-icon {background-image:url('{{ STATIC_URL }}img/remove.png'); background-repeat:no-repeat;}
+</style>
+<div class="course-content" style="border:2px solid #ccc">
+	<h4 style="text-align:center;">{{ course.title }}</h4>
+	<table class="table table-striped">
+	    <tbody>
+	      <tr>
+	        <td class="info"><b>Course Code</b></td>
+	        <td>{{ course.id }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Course Name</b></td>
+	        <td>{{ course.title }}</td>
+	      </tr>
+	      <!--tr>
+	        <td class="info"><b>Course Instructor</b></td>
+	        <td>{% if course.creater.first_name %} {{ course.creater.first_name }} {{ course.creater.last_name }} {% else %} {{ course.creater }} {% endif %}</td>
+	      </tr-->
+	      <tr>
+	        <td class="info"><b>Course Start Date</b></td>
+	        <td>{{ course_info.start_time }}</td>
+	      </tr>
+	      <!--tr>
+	        <td class="info"><b>Term</b></td>
+	        <td>{{ course.term }}</td>
+	      </tr-->
+	      <tr>
+	        <td class="info"><b>Current Status</b></td>
+	        <td>{% if not course_info.is_published %} NOT {% endif %} PUBLISHED</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Description</b></td>
+	        <td>{{ course_info.description }}</td>
+	      </tr>
+	    </tbody>
+	</table>
+</div>
+{% endblock %}

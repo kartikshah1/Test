@@ -1,0 +1,54 @@
+/* Syllabus related CSS */
+
+.bread-crumb-search-area {
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.heading-inner-search-area {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.btn-inner-search-area {
+    padding: 2px 10px;
+}
+
+.panel-search-area {
+    margin: 6px !important;
+}
+
+.being-dragged {
+  border: 2px solid #aaa;
+  border-style: dashed;
+  opacity: 0.5;
+}
+
+
+
+/*CSS for the right pane of syllabus*/
+
+.syllabus-groups {
+    border: 1px solid rgb(225,225,225);
+    border-radius: 5px;
+    min-height: 40px;
+    overflow: auto;
+}
+
+.syllabus-right-pane-activate {
+    border: 2px solid rgb(225,25,225);
+    border-radius: 5px;
+}
+
+.syllabus-right-pane-hover {
+    border: 2px solid rgb(25,225,225);
+    border-radius: 5px;
+}
+
+.syllabus-group-collapse-box {
+    min-height: 40px;
+}
+
+.syllabus-concept-collapse-box {
+    min-height: 40px;
+}

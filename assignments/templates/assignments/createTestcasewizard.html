@@ -1,0 +1,58 @@
+{% extends 'assignments/assignments_base.html' %}
+
+{% load i18n %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block sidebar %}
+	<p class="lead">Assignment Details</p>
+	<hr>
+	<p>Deadline: {{ program.assignment.deadline }}</p>
+	<p>Programming Language: {{ program.assignment.program_language }}</p>
+	<p>Files in submission: {{ program.assignment.student_program_files }}</p>
+	<p>Model solution: {% if not program.assignment.model_solution %}NOT{% endif %} AVAILABLE</p>
+	<p>Description: {{ program.assignment.description }}</p>
+
+	<p class="lead">Section Details</p>
+	<hr>
+	{% if compiler_command %}
+	<p>Compiler Command: {{ compiler_command }}</p>
+	{% endif %}
+	{% if execution_command %}
+	<p>Execution Command: {{ execution_command }}</p>
+	{% endif %}
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' program.assignment.course.id %}">{{ program.assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' program.assignment.id %}">{{ program.assignment.name }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_detailsprogram' program.id %}">{{ program.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Create Testcase</li>
+	</ul>
+</div>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+<fieldset>
+	<legend>Create Testcase Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</legend>
+<table class="table">
+{{ wizard.management_form }}
+{% if wizard.form.forms %}
+    {{ wizard.form.management_form }}
+    {% for form in wizard.form.forms %}
+        {{ form.as_table }}
+    {% endfor %}
+{% else %}
+    {{ wizard.form }}
+{% endif %}
+</table>
+{% if wizard.steps.prev %}
+<button class="btn btn-large btn-info" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button class="btn btn-large btn-info" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+<input class="btn btn-large btn-info" type="submit" value="{% trans "Submit" %}"/>
+</fieldset>
+</form>
+{% endblock %}

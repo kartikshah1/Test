@@ -1,0 +1,30 @@
+<!--Author: Shrikant Nagori-->
+
+{% extends "elearning_academy/logged_in.html" %}
+
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/instructor/my_offerings.css" rel="stylesheet">
+<link href="{{STATIC_URL}}courseware/css/mycourses.css" rel="stylesheet">
+<link href="{{STATIC_URL}}courseware/css/courses.css" rel="stylesheet">
+<link href="{{STATIC_URL}}discussion_forum/css/forum.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/category_loader.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/instructor/my_offerings.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/generic.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+        < MyCourseBody courses = '{{data}}' />, document.getElementById('mycoursesBody')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+
+    <div id="mycoursesBody" class="row">
+    </div>
+
+{% endblock %}

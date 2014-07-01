@@ -1,0 +1,92 @@
+{% extends 'evaluate/evaluate_base.html' %}
+
+{% block title %}{{ assignment.name }} Results{% endblock %}
+
+{% block main %}
+	<h4>Results for {{ assignment.name }} {{ program.name }}</h4>
+	<div class="span12">
+		<h5 style="color:green;">{{ prgrm.program.name }}</h5>
+		{% if  results.filesFound %}
+			<div class="accordion" id="accordion{{ program.id }}pro">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+        				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ program.id }}pro" href="#collapse{{ program.id }}innerpro">
+          					Files are not found.
+        				</a>
+      				</div>
+      				<div id="collapse{{ program.id }}innerpro" class="accordion-body collapse">
+        				<div style="padding-left:40px" class="accordion-inner">
+        					<div class="row">
+	        					We couldn't find following files in your submission directory-<br/>
+	        					{{ results.missingFiles|join:"<br/>" }}<br>
+	        					<h5>Your tar contains following files -</h5>
+	        					{{ results.submittedFiles|join:"<br/>" }}
+							</div>
+        				</div>
+        			</div>
+				</div>
+			</div>
+		{% elif results.compileResult.returnCode == 0 %}
+			<div class="accordion" id="accordion{{ prgrm.program.id }}pro">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ program.id }}pro" href="#collapsecustomtst">
+							{% if results.actualOutput.returnCode == 0 and results.passed %} Test PASSED
+							{% else %} Test FAILED {% endif %}
+						</a>
+					</div>
+					<div id="collapsecustomtst" class="accordion-body collapse">
+						<div style="padding-left:25px" class="accordion-inner">
+							{% if results.actualOutput.returnCode == 0 %}
+								<div class="row">
+									<div class="span6">
+										Expected output:<br/>
+										{{ results.expectedOutput.stdout|join:"<br/>" }}
+									</div> 
+									<div class="span6">
+										Actual output:<br/>
+										{{results.actualOutput.stdout|join:"<br/>" }}
+									</div>
+								</div>
+							{% else %}
+								<div class="row">
+									<h5>{{ error_msg|getdictvalue:tst.return_code }}. Program exited with return code {{ results.actualOutput.returnCode }}.</h5>
+								</div>
+								<div class="row">
+									<div class="span6">
+										Expected output:<br/>
+										{{ results.expectedOutput.stdout|join:"<br/>" }}
+									</div> 
+									<div class="span6">
+										Actual output:<br/>
+										{{results.actualOutput.stdout|join:"<br/>" }}
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="accordion" id="accordion{{ prgrm.program.id }}pro">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+        				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ program.id }}pro" href="#collapse{{ program.id }}innerpro">
+         					Compilation Failed.
+        				</a>
+      				</div>
+      				<div id="collapse{{ program.id }}innerpro" class="accordion-body collapse">
+        				<div style="padding-left:25px" class="accordion-inner">
+        					<div class="row">
+	        					Compile command: {{ results.compileResult.command }}<br/>
+	        					Return Code: {{ results.compileResult.returnCode }}<br/>
+	        					<h6 style="color:red;">Error Message</h6>
+								{{ results.compileResult.stderr|join:"<br/>" }}
+							</div>
+        				</div>
+        			</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

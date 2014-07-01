@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+	<style type="text/css">
+		.nav-header {
+			background-image:url('{{ STATIC_URL }}img/right.png');
+			background-repeat:no-repeat;
+			float:left;
+		}
+		.nav-header-expanded {
+			background-image:url('{{ STATIC_URL }}img/down.png');
+			background-repeat:no-repeat;
+			float:left;
+		}
+		.cb {
+			clear:both;
+		}
+	</style>
+	<div class="well" style="padding: 8px 0; border:2px solid #ccc; min-height: 500px;">
+    	<div style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
+	        <ul class="nav nav-list">
+               	<li style="text-align:center;"><a href="{% url 'assignments_index' course.id %}"><b>{{ course.id }} - {{ course.title }}</b></a></li>
+                <li class="divider"></li>
+                {% if 1 == is_moderator %}	
+	                <li style="text-align:center;"><a href="{% url 'assignments_create' course.id %}">Add Assignment</a></li>
+	                <li class="divider"></li>
+                {% endif %}
+                {% if assignments %}
+                	<h4>Assignments</h4>
+                 	{% for asgnmnt in assignments %}
+               	 		<li>
+                       		<label class="tree-toggler nav-header assignments" id="a{{ asgnmnt.id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                       		<div style="overflow:hidden">
+                       			<a {% if date_time >= asgnmnt.deadline %}
+                       				style="color: red; float:left;" title="This assignment is due"
+                       			   {% else %}
+                       			   	style="float:left;"
+                       			   {% endif %} href="{% url 'assignments_details' asgnmnt.id %}">{{ asgnmnt.name }}
+                       			</a>
+                       			<br />
+                       			<span style="font-size:12px">(Due: {{ asgnmnt.deadline }})</span>
+                       		</div>
+                       		<input type="hidden" class="asgnid" value="{{ asgnmnt.id }}" />
+                       		<input type="hidden" class="loaded-programs" value="0" />
+                       		<div class="cb"></div>
+                       		<ul class="nav nav-list tree">
+                       		</ul>
+                   		</li>
+                   		<li class="divider"></li>
+                  	{% endfor %}
+                {% else %}
+					<li style="text-align:center;">No Assignment for this course</li>
+				{% endif %}
+            </ul>
+         </div>
+	</div>
+	<script>
+		$(document).ready(function () {
+//			$('label.tree-toggler').parent().children('ul.tree').toggle(1);
+			$('label.programs').live('click', function () {
+				if($(this).parent().children('.loaded-testcases').val() == '0') {
+					var pid =  $(this).parent().children('.progid').val();
+					var obj = $(this).parent();
+					$.ajax({
+						type: "GET",
+						url: "{% url 'assignment_testcaselist' %}",
+						data: { progid: pid }
+					}) .done(function( data ) {
+						obj.children('ul').html(data);
+//						obj.children('ul.tree').toggle(300);
+					});
+					$(this).parent().children('.loaded-testcases').val('1');
+//					$(this).toggleClass("nav-header nav-header-expanded");
+				}
+				else {
+					$(this).parent().children('ul.tree').toggle(300);
+//					$(this).toggleClass("nav-header nav-header-expanded");
+				}
+			});
+			$('label.assignments').live('click', function () {
+				if($(this).parent().children('.loaded-programs').val() == '0') {
+					var asid =  $(this).parent().children('.asgnid').val();
+					var obj = $(this).parent();
+					$.ajax({
+						type: "GET",
+						url: "{% url 'assignment_programlist' %}",
+						data: { asgnid: asid }
+					}) .done(function( data ) {
+						obj.children('ul').html(data);
+//						obj.children('ul.tree').toggle(300);
+					});
+					$(this).parent().children('.loaded-programs').val('1');
+//					$(this).toggleClass("nav-header nav-header-expanded");
+				}
+				else {
+					$(this).parent().children('ul.tree').toggle(300);
+//					$(this).toggleClass("nav-header nav-header-expanded");
+				}
+			});
+		});
+		
+		function loadAssig(a) {
+			var asid =  $("#a" + a).parent().children('.asgnid').val();
+			var obj = $("#a" + a).parent().children('ul');
+			$.ajax({
+				type: "GET",
+				url: "{% url 'assignment_programlist' %}",
+				async: false,
+				data: { asgnid: asid }
+			}) .done(function( data ) {
+				obj.html(data);
+			});
+			$("#" + a).parent().children('.loaded-programs').val('1');
+//			$("#" + a).toggleClass("nav-header nav-header-expanded");
+		}
+		
+		function loadProg(p) {
+			var prid =  $("#p" + p).parent().children('.progid').val();
+			var objp = $("#p" + p).parent().children('ul');
+			$.ajax({
+				type: "GET",
+				url: "{% url 'assignment_testcaselist' %}",
+				async: false,
+				data: { progid: prid }
+			}) .done(function( data ) {
+				objp.html(data);
+			});
+			$("#" + p).parent().children('.loaded-testcases').val('1');
+//			$("#" + p).toggleClass("nav-header nav-header-expanded");
+		}
+		
+		function expandtree() {
+			if($("#asgn_id").length != 0) {
+				var a = $("#asgn_id").val();
+				var p = $("#prog_id").val();
+				if(a != "") {
+					loadAssig(a);
+					if(p != "") {
+						setTimeout(function() { loadProg(p); }, 500);
+					}
+				}
+			}
+		}
+		
+		window.onload = expandtree();
+	</script>
+
+{% endblock %}

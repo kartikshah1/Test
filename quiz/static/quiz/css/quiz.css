@@ -1,0 +1,61 @@
+.question {
+    overflow: auto;
+}
+
+.question .question-text {
+    margin-bottom: 10px;
+}
+
+.no-padding {
+    padding: 0px 0px 0px 0px;
+}
+
+.quiz-text-mute {
+    font-size: 12px;
+    color: #8f8f8f;
+}
+
+.quiz-right-margin {
+    margin-right: 10px;
+}
+
+.question-submit, .quiz-edit, .question-module-edit {
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+.quiz-table tbody tr td {
+    vertical-align: middle;
+}
+
+.confirm-delete {
+    width: 20%;
+}
+
+.alert .link-normal-text {
+    color: inherit;
+}
+
+textarea.option-list-text {
+    min-height: 34px;
+    height: 34px;
+    resize: both !important;
+}
+
+.option-module-list .input-group-addon:hover{
+    background-image: url('../img/grippy_large.png');
+    background-repeat: repeat-y;
+}
+
+.option-module-list li{
+    margin-bottom: 15px;
+}
+
+.option-module-list{
+    margin-bottom: 0;
+    overflow: auto;
+}
+
+.quiz-panel {
+    border-radius: 0;
+}

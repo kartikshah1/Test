@@ -1,0 +1,77 @@
+{% extends 'upload/upload_base.html' %}
+{% load i18n %}
+	
+{% block content_title %}{% endblock %}
+{% block main %}
+    <div class="well sidebar-nav">
+    <div class="row-fluid">
+    <div class="span10 offset1">
+	<script type="text/javascript">
+		$(function() {
+    $('form').submit(function(e) {
+
+    if($(this).attr('ajaxify')) {
+    /*
+       function my_js_callback(data) {
+           var $response=$(data);
+           var oneval = $response.find('#files');
+ 				   $('#files').html(oneval);
+       }
+       formdata = $('#myform').serializeObject();
+       Dajaxice.upload.uploadFile(Dajax.process, {'form': formdata});
+				*/
+       data = new FormData();
+       data.append( 'docfile', $( '#id_docfile' )[0].files[0] );
+       data.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+       
+       $.ajax({
+            url: $(this).attr('ajaxify'),
+            type: 'POST',
+            processData: false,
+            contentType:false,
+            data: data,
+            error: function(request, status, error){
+ 				    alert(request.responseText);
+						},
+            success : function(data){
+            var $response=$(data);
+            var oneval = $response.find('#files');
+ 				    $('#files').html(oneval);
+						}
+        });
+        return false;
+    }
+    else { return true; }
+    });
+   });	
+	</script>
+	<li class="nav-header"><h4>Your assignment files</h4></li>
+	 <li class="nav-header">{{assignId}}</li>
+	 <div id="files">
+	{% if documents %}
+		<ul>
+			{% for document in documents %}
+				<li><a href="{{ document.filePath.url }}">{{ document.filePath.name }}</a>
+			{% endfor %}
+    </ul>
+	{% else %}
+		<p>No documents.</p>
+  {% endif %}
+  </div>
+  <div id="uplodForm">
+        <!-- Upload form. Note enctype attribute! -->
+        <form id="myform" action="{% url 'upload' %}" method="post" enctype="multipart/form-data" ajaxify="{% url 'upload' %}">
+        	{% csrf_token %}
+          <p>{{ form.non_field_errors }}</p>
+          <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+          <p>
+          {{ form.docfile.errors }}
+          {{ form.docfile }}
+          </p>
+          <p><input type="submit" value="Upload" /></p>
+		</form>
+	</div>
+	</div>
+	</div>
+	</div>
+{% endblock %}

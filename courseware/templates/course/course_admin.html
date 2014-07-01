@@ -1,0 +1,15 @@
+{% extends "elearning_academy/root.html" %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/courses.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/category_loader.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/course_admin.jsx"></script>
+{% endblock %}
+
+{% block body %}
+<div id="course-add" class="col-md-8 col-md-offset-2">
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Courses{% endblock %}
+
+
+{% block main %}
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<h4>Available Courses</h4>
+<ul>
+{% if allcourses %}
+	{% for acourse in allcourses %}
+	    <li><a href="{% url 'assignments_index' acourse.id %}">{{ acourse.id }}, {{ acourse.title }}</a></li>
+	{% endfor %}
+{% endif %}
+</ul>
+
+{% endblock %}

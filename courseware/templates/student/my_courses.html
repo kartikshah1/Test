@@ -1,0 +1,39 @@
+<!--Author: Shrikant Nagori-->
+
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/mycourses.css" rel="stylesheet">
+<link href="{{STATIC_URL}}courseware/css/courses.css" rel="stylesheet">
+<link href="{{STATIC_URL}}discussion_forum/css/forum.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script src="{{STATIC_URL}}elearning_academy/js/jquery-1.9.1.min.js"></script>
+<script src="{{STATIC_URL}}elearning_academy/js/jquery-ui-1.10.3.min.js"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/mycourses.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/generic.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+        < MyCourseBody courses = '{{data}}' />, document.getElementById('mycoursesBody')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+    <div id="courseBar" class="row">
+        <div class="col-md-8 mycourseTitle">
+            MY COURSES
+        </div>
+        <div class="col-md-4 pull-right">
+            <form class="mynavbar-search" method="POST" action="">
+                {% csrf_token %}
+                <input type="text" class="mysearch-query pull-right" name="query" value="{{query}}" placeholder="Search Courses">
+            </form>
+        </div>
+    </div>
+    <div id="mycoursesBody" class="row courseContainer">
+    </div>
+
+{% endblock %}

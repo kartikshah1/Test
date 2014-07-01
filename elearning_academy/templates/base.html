@@ -1,0 +1,98 @@
+{% load dajaxice_templatetags %}  
+{% load url from future %}
+{% load i18n static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% dajaxice_js_import %}
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+	{% block css %}
+		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" media="all"/>
+		<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" media="screen" />
+		<link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" media="screen" />
+		<link href="{{ STATIC_URL }}css/jquery.jscrollpane.css" rel="stylesheet" media="screen" />
+	{% endblock %}
+
+	{% block javascript %}
+		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dajax.core.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ba-serializeobject.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/myJavaScript.js"></script>
+	{% endblock %}
+
+	<title>{% block title %}{% endblock %}</title>
+		<style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background-color: #99ccff;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+      body, html {
+  		height: 100%;
+	  }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background-color: #CCC; }
+	  ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.4);
+	</style>
+    
+</head>
+    
+<body>
+	<div class="overlay" style="z-index:1035; background: rgba(0, 0, 0, .60); display: none; position:fixed; width: 100%; height: 100%; top:0px;"></div>
+	{% block popup %}{% endblock %}
+	<div id="header" class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+			{% block navbar %}
+				<a class="brand" href="/">Auto Grader</a>
+				<div class="nav-collapse collapse">
+				{% if user.is_authenticated %}
+
+				<p class="navbar-text pull-right">Logged in as {{ user }} <a href="/accounts/logout" class="navbar-link">log-out</a></p>
+				{% else %}
+					<p class="navbar-text pull-right">You are not logged-in</p>
+				{% endif%}
+			</div>
+		{% endblock %}
+			</div><!--/.container-fluid-->
+		</div>
+	</div> <!--all-->
+
+
+	<div id="pagebody" class="container-fluid">
+		<div id="maincontent" class="row-fluid">
+			<div id="list1" class="span3">
+				{% block sidebar %}{% endblock %}
+			</div><!--/span3-->
+
+			<div class="span9 well" id="contenthere">
+				{% block main %}{% endblock %}
+			</div><!--/span9-->
+		</div><!--/row-fluid-->
+
+		<div id="footer" class="container-fluid">
+			{% block footer %}{% endblock %}
+		</div>
+
+	</div><!--/.container-fluid-->
+	</body>
+</html>

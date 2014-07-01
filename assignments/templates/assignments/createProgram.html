@@ -1,0 +1,36 @@
+{% extends 'assignments/assignments_base.html' %}
+
+{% block title %}Create new Section for {{ assignment.name }}{% endblock %}
+
+{% block sidebar %}
+<h4 class="featurette-heading">{{ course.id }} {{ course.title }} {{ assignment.name }}</h4>
+<hr>
+<p class="lead">Assignment Details</p>
+<p>Deadline: {{ assignment.deadline }}</p>
+<p>Programming Language: {{ assignment.program_language }}</p>
+<p>Files in submission: {{ assignment.student_program_files }}</p>
+<p>Model solution: {% if not assignment.model_solution %}NOT{% endif %} AVAILABLE</p>
+<p>Description: {{ assignment.description }}</p>
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Create Section</li>
+	</ul>
+</div>
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+	<fieldset>
+	<legend>Create source code file name to be compiled.</legend>
+	<table class="table">
+		{{ form.as_table }}
+		<tr><th></th><td>
+  		<input class="btn btn-large btn-info" type="submit" value="Create"/>
+  		</td></tr>
+	</table>
+	</fieldset>
+</form>
+{% endblock %}

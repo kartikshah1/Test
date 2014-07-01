@@ -1,0 +1,65 @@
+[
+    {
+        "model": "user_profile.Major",
+        "pk": 1,
+        "fields": {
+            "major" : "Computer Science"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 2,
+        "fields": {
+            "major" : "Computer Science and Engineering"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 3,
+        "fields": {
+            "major" : "Maths and Computing"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 4,
+        "fields": {
+            "major" : "Electrical Engineering"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 5,
+        "fields": {
+            "major" : "Electronics Engineering"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 6,
+        "fields": {
+            "major" : "Electrical and Electrical Engineering"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 7,
+        "fields": {
+            "major" : "Electronics and Communications"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 8,
+        "fields": {
+            "major" : "Electrical and TeleCommunications"
+        }
+    },
+    {
+        "model": "user_profile.Major",
+        "pk": 9,
+        "fields": {
+            "major" : "Mechanical Engineering"
+        }
+    }
+]

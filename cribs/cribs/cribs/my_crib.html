@@ -1,0 +1,41 @@
+{% extends 'cribs/cribs_base.html' %}
+
+{% block title %}My cribs{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">My Cribs</li>
+	</ul>
+</div>
+	{% if crib %}
+		<div style="background-color:white;">
+			<div>
+				<h4>{{ crib.title }}</h4>
+			</div>
+			<div>
+				{{ crib.crib_detail }}
+			</div>
+			<div class="pull-right"><i>{{ crib.assignment_result.submission.owner}} on {{ crib.created_on }}</i></div>
+		</div>
+		<hr>
+		{% for comment in comments %}
+			<div style="background-color:white;">
+				<div style="background-color:white;">{{ comment.comment }}</div>
+				<div class="pull-right"><i>{{ comment.posted_by }} on {{ comment.posted_on }}</i></div>
+			</div>
+			<br>
+		{% endfor %}
+		<br><br><br>
+		<form action="{% url 'cribs_postcomment' crib.id %}" method="post">
+			{% csrf_token %}
+			{{ form }}
+			<br/>
+			<input type="submit" value="POST"/>
+		</form>
+	{% else %}
+		There are no cribs for this assignment. <a href="{% url 'cribs_createcrib' assignment.id %}">Create</a> Now.
+	{% endif %}
+{% endblock %}

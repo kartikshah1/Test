@@ -1,0 +1,171 @@
+/* Author : Shrikant Nagori */
+/*My Course Page related css*/
+
+.myinfo{
+	padding-right: 0px;
+	padding-left: 5px;
+}
+
+.mycourseActions {
+  padding-left: 10px;
+}
+
+.mysyllabus{
+	padding-left: 0px;
+}
+
+.myofferingDate{
+	padding-top: 10px;
+	font-family:"sofiapro-medium",Arial,sans-serif	;
+	font-size: 14px;
+}
+
+.myofferingHeading {
+	padding-top: 10px;
+	padding-left: 20px;
+	font-family:"sofiapro-medium",Arial,sans-serif	;
+	font-size: 14px;
+} 
+
+.myofferingTitle {
+	margin-right: 0px;
+	margin-left: 0px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	text-transform: uppercase;
+	font-family: normal 1em/1em "Open Sans",Verdana,Geneva,Arial,sans-serif;
+	margin-bottom: 10px;
+	cursor: pointer;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	color: #1192bf;
+	z-index: 10;
+	position: relative;
+}
+
+.myofferingBox{	
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 30px;
+	margin-right: 30px;
+	padding-top: 1px;
+	background-color:#F3F3F2;
+	position:relative;
+}
+
+.myofferingActions{
+	margin-right: 0px;
+	margin-left: 0px;
+	cursor: pointer;
+	font-size: 14px;
+	color: #0367b0;
+	padding-bottom: 20px;
+	vertical-align:text-bottom;
+}
+
+.myschedule{
+	padding-left: 20px;
+}
+
+.header{
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.concepts{
+	color: #7f7f7f;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	border-bottom: solid 1px #dcdcdc;
+}
+
+.myconcepts{
+	position: relative;
+	margin-bottom: 10px;
+	padding-left: 100px;
+	padding-bottom: 10px;
+}
+
+.myofferingDetails{
+	font-family: Karla,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+	border-left: solid 1px #dcdcdc;
+	padding-bottom: 20px;
+}
+
+.detaillink{
+	width: 150px;
+	height: 25px;
+	margin-left: 10px;
+	padding-left: 0px;
+	text-decoration: none;
+	color: #707070;
+	letter-spacing: .1em;
+	border-bottom: solid 1px #dcdcdc;
+}
+
+.detaillink:hover{
+
+	text-decoration: underline;
+	color: #1192bf;
+}
+
+.conceptbox{
+	padding-top: 15px;
+	padding-left: 10px;
+}
+
+.detailsrow{
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.conceptname{
+	letter-spacing: .1em;
+	text-transform:capitalize;
+	color: #1192bf;
+	text-decoration: none;
+}
+
+.addcourse-button {
+  margin-right: 12px;
+  width: 40%;
+  background-color: #1F9736;
+  border-color: #35BD76;
+}
+
+.addcourse-button:hover {
+  background-color: #1D642B;
+  border-color: #35BD76;
+}
+
+.coursebar{
+	margin-right: 0px;
+}
+
+.offeringTitle {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	text-transform: uppercase;
+	font-family: normal 1em/1em "Open Sans",Verdana,Geneva,Arial,sans-serif;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	cursor: pointer;
+	font-weight: bold;
+	color: #1192bf;
+}
+
+.offerinrTitlemessage{
+	padding-top : 10px; 
+}
+
+.addcoursebutton{
+	padding-left: 60px;
+}

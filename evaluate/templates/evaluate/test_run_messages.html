@@ -1,0 +1,55 @@
+{% load evaluatetags %}
+<div class="accordion-group">
+	<div class="accordion-heading">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ prgrm.program_result.program.id }}pro" href="#collapse{{ tst.test_case.id }}tst">
+			{% if tst.return_code == 0 and tst.test_passed %} {{ tst.test_case.name }} PASS
+			{% else %} {{ tst.test_case.name }} FAIL {% endif %}  <span class="pull-right">{{ tst.marks }} Marks</span>
+		</a>
+	</div>
+	<div id="collapse{{ tst.test_case.id }}tst" class="accordion-body collapse">
+		<div style="padding-left:40px" class="accordion-inner">
+			{% if tst.return_code == 0 %}
+				<div class="row">
+					{% if is_due or user == assignment.creater %}
+						<div class="span4" style="word-wrap: break-word;">
+							Input:<hr style="margin-top: 5px; margin-bottom: 10px">
+							{{ tst.std_input|join:"<br/>" }}
+						</div>
+						<div class="span4" style="word-wrap: break-word;">
+							Expected output:<hr style="margin-top: 5px; margin-bottom: 10px">
+							{{ tst.expected_output|join:"<br/>" }}
+						</div> 
+						<div class="span4" style="word-wrap: break-word;">
+							Actual output:<hr style="margin-top: 5px; margin-bottom: 10px">
+							{{ tst.actual_output|join:"<br/>" }}
+						</div>
+					{% else %}
+						Output is hidden before deadline
+					{% endif %}
+				</div>
+			{% else %}
+				<div class="row">
+					<h5>{{ error_msg|getdictvalue:tst.return_code }}. Program exited with return code {{ tst.return_code }}.</h5>
+				</div>
+				<div class="row">
+					{% if is_due or user == assignment.creater %}
+						<div class="span4" style="word-wrap: break-word;">
+							Input:<hr style="margin-top: 5px; margin-bottom: 10px">
+							{{ tst.std_input|join:"<br/>" }}
+						</div>
+						<div class="span4" style="word-wrap: break-word;">
+							Expected output:<hr style="margin-top: 5px; margin-bottom: 10px">
+							{{ tst.expected_output|join:"<br/>" }}
+						</div> 
+						<div class="span4" style="word-wrap: break-word;">
+							Actual output:<hr style="margin-top: 5px; margin-bottom: 10px">
+							{{ tst.actual_output|join:"<br/>" }}
+						</div>
+					{% else %}
+						Output is hidden before deadline
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>

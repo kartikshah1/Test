@@ -1,0 +1,29 @@
+{% extends "elearning_academy/root.html" %}
+
+
+{% block title %}{{MY_SITE_NAME}}{% endblock %}
+{% block cssLinks %} {% endblock %}
+
+{% block body %}
+	<div class="row">
+	    <div class="col-md-10 col-md-offset-1 white-panel no-padding">
+	        <div class="row">
+	            <div class="col-md-8 upper-white-panel">
+	                <img src="{{STATIC_URL}}elearning_academy/img/index_page_picture.jpg" />
+	            </div>
+	            <div class="col-md-4 right-white-panel">
+                    <h3>{{MY_SITE_NAME}}</h3>
+                    <h4>
+                        Tell me and I forget, teach me and I may remember, involve me and I learn.
+                    </h4>
+                    <h5>- Benjamin Franklin</h5>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="bottom-white-panel">
+	                <p class="lead">Initiative for Online Classroom Learning by IIT Bombay.</p>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+{% endblock %}

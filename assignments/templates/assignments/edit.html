@@ -1,0 +1,50 @@
+{% extends 'assignments/assignments_base.html' %}
+
+{% block javascript %}
+	{{ block.super }}
+	<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" /> -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui_smoothness.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.datetimepicker.css"/ >
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+	<script src="{{ STATIC_URL }}js/jquery-1.9.1.js"></script>
+	<!-- <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
+	<script src="{{ STATIC_URL }}js/jquery-ui_1.10.3.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.datetimepicker.js"></script>
+	<script>
+	$(function() {
+	//$( "#id_deadline" ).datepicker({dateFormat: 'yy-mm-dd'});
+	$( "#id_deadline" ).datetimepicker();
+	$( "#id_publish_on" ).datetimepicker();
+	$( "#id_hard_deadline" ).datetimepicker();
+	});
+	</script>
+{% endblock %}
+
+{% block title %}Edit Assignment{% endblock %}
+
+{% block sidebar %}
+<h4>{{ course.id }} {{ course.title }}</h4>
+<h5>{{ assignment.name }}</h5>
+{% endblock%}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Edit Assignment</li>
+	</ul>
+</div>
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+	<fieldset>
+	<legend>Edit Assignment</legend>
+	<table class="table">
+		{{ form.as_table }}
+		<tr><th></th><td>
+  		<input class="btn btn-large btn-info" type="submit" value="Update"/>
+  		</td></tr>
+	</table>
+	</fieldset>
+</form>
+{% endblock %}

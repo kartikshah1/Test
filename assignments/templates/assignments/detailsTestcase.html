@@ -1,0 +1,136 @@
+{% extends 'assignments/assignments_base.html' %}
+{% load assignmentTags %}
+
+{% block title %}Testcase Details{% endblock %}
+
+{% block sidebar %}
+<!-- 
+<h4>{{ testcase.program.assignment.name }}, {{ testcase.program.name }}, {{ testcase.name }}</h4>
+{% if user == testcase.program.assignment.creater %}
+	<a class="btn btn-danger" href="{% url 'assignments_removetestcase' testcase.id %}" onclick="return confirm('Deleting this testcase will result in deleting all associated results if any. \nDo you want to continue?')">Delete This Testcase</a>
+{% endif %}
+ -->
+	<input type="hidden" value="{{ testcase.program.assignment.id }}" id="asgn_id" />
+	<input type="hidden" value="{{ testcase.program.id }}" id="prog_id" />
+{{ block.super }}
+{% endblock %}
+
+{% block main %}
+	<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' testcase.program.assignment.course.id %}">{{ testcase.program.assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' testcase.program.assignment.id %}">{{ testcase.program.assignment.name }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_detailsprogram' testcase.program.id %}">{{ testcase.program.name }}</a> <span class="divider">/</span></li>
+		<li class="active">{{ testcase.name }}</li>
+	</ul>
+	</div>
+
+	{% if is_due %}
+  	<div class="alert alert-error">
+     	This assignment is due.
+  	</div>
+	{% endif %}
+
+<style>
+	.info {width:200px; }
+	.edit-icon {background-image:url('{{ STATIC_URL }}img/edit.png'); background-repeat:no-repeat;}
+	.delete-icon {background-image:url('{{ STATIC_URL }}img/remove.png'); background-repeat:no-repeat;}
+	.add-icon {background-image:url('{{ STATIC_URL }}img/add.png'); background-repeat:no-repeat;}
+</style>
+{% if user == testcase.program.assignment.creater %}
+	<div class="course pull-right">
+		<span class="edit-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<a href="{% url 'assignments_edittestcase' testcase.id %}">Edit Testcase</a>&nbsp;
+		<span class="delete-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<a href="{% url 'assignments_removetestcase' testcase.id %}" onclick="return confirm('Deleting this testcase will result in deleting all associated results if any. \nDo you want to continue?')">Delete Testcase</a>
+	</div>
+	<br/>
+{% endif %}
+<div class="course-content" style="border:2px solid #ccc">
+	<h4 style="text-align:center;">{{ testcase.name }}</h4>
+	<table class="table table-striped">
+	    <tbody>
+	      {% if user == testcase.program.assignment.creater %}
+	      	<tr>
+	      		<td class="info"><b>Configure Resource Limits</b></td>
+	      		<td><a href="{% urlwithgetparam assignments_configsafeexecparams testcase.program.assignment.id get_params=get_params %}">Configure</a></td>
+	      	</tr>
+	      {% endif %}
+	      <tr>
+	        <td class="info"><b>Command line arguments</b></td>
+	        <td>{{ testcase.command_line_args }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Marks</b></td>
+	        <td>{{ testcase.marks }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Standard input file name</b></td>
+	        <td>{{ testcase.std_in_file_name }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Model output file name</b></td>
+	        <td>{{ testcase.std_out_file_name }}</td>
+	      </tr>
+
+	      {% if user == testcase.program.assignment.creater and testcase_errors %}
+	      <tr>
+			<td class="info"><b>Testcase errors</b></td>
+		  	<td>
+		      {% for terror in testcase_errors %}
+					{{ terror.error_message }}
+		      {% endfor %}
+	      	</td>
+	      </tr>
+	      {% endif %}
+
+	      {% if testcase.input_files %}
+	      <tr>
+	        <td class="info"><b>Input Files</b></td>
+	        <td>
+	        	{% if user == testcase.program.assignment.creater or is_due or testcase.program.program_type == "Practice" %}
+	        		<a href="{{ testcase.input_files.url }}">{{ testcase.input_files|getfilename }}</a>
+	        	{% else %}
+	        		Testcase input file is hidden
+	        	{% endif %}
+	        </td>
+	      </tr>
+	      {% endif %}
+	      {% if testcase.output_files %}
+	      <tr>
+	        <td class="info"><b>Output Files</b></td>
+	        <td>
+	        	{% if user == testcase.program.assignment.creater or is_due or testcase.program.program_type == "Practice" %}
+	        		<a href="{{ testcase.output_files.url }}">{{ testcase.output_files|getfilename }}</a>
+	        	{% else %}
+	        		Testcase output file is hidden
+	        	{% endif %}
+	        </td>
+	      </tr>
+	      {% endif %}
+	      <tr>
+	        <td class="info"><b>Description</b></td>
+	        <td>{{ testcase.description|spacify }}</td>
+	      </tr>
+	    </tbody>
+	</table>
+</div>
+<!-- 
+	<h4>{{ testcase.name }}</h4>
+	<p>Command line argument: {{ testcase.command_line_args }}</p>
+	<p>Marks: {{ testcase.marks }}</p>
+	<p>Standard input file name: {{ testcase.std_in_file_name }}</p>
+	<p>Model output file name: {{ testcase.std_out_file_name }}</p>
+	{% if testcase.input_files %}
+		<p>Input Files: <a href="{{ testcase.input_files.url }}">{{ testcase.input_files|getfilename }}</a></p>
+	{% endif %}
+	{% if testcase.output_files %}
+		<p>Output Files: <a href="{{ testcase.output_files.url }}">{{ testcase.output_files|getfilename }}</a></p>
+	{% endif %}
+	<p>Description: {{ testcase.description }}</p>
+
+	{% if user == testcase.program.assignment.creater %}
+		<a class="btn btn-info" href="{% url 'assignments_edittestcase' testcase.id %}">EDIT</a>
+	{% endif %}
+-->
+{% endblock %}

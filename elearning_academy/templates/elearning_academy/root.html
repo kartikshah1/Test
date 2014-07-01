@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+        <title>{% block title %} {{MY_SITE_NAME}} {% endblock %}</title>
+        <link rel="shortcut icon" href="{{favicon}}" />
+        <link rel="icon" href="{{favicon}}" type="image/icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="" />
+		<!--meta name="author"
+			content="Darshan Kapashi, Saif Hasan, Alankar Saxena" /-->
+
+		<!-- styles -->
+		<link href="{{STATIC_URL}}elearning_academy/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link href="{{STATIC_URL}}elearning_academy/css/main.css"
+			rel="stylesheet" />
+        <link href="{{STATIC_URL}}elearning_academy/css/wmd.css"
+            rel="stylesheet" />
+
+		<!-- View specific style files -->
+		{% block cssLinks %} {% endblock %}
+
+	</head>
+
+    <body>
+		<!-- Navbar  -->
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="{{favicon}}"> </img>
+                        {{MY_SITE_NAME}}</a>
+                    </div>
+					<ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'parent_categories' %}">Courses</a><li>
+                        <!--li><a href="#">Content Partners </a></li-->
+						<!-- View Specific nav bar links -->
+						<!-- Add here -->
+						{% block navLinks %}
+						<li><a href="{% url 'login' %}">
+                                <span style="border-left:1px solid; border-color:#777777;
+                                    padding-left:15px;">
+                                    Log In
+                                </span>
+                            </a>
+                        </li>
+                        <li><a href="{% url 'signup' %}" style="padding-left:0px;">
+                            Sign Up</a></li>
+						{% endblock %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+
+		<!-- Main Container -->
+		<div id="main-container" class="container">
+			{% block body %}
+			{% endblock %}
+		</div>
+
+
+
+        <!-- Message Container -->
+        <div id="message-container">
+            <div id="message-text-container">
+                <div id="message-text" class="alert alert-default hide">
+                    You don't have enough permissions
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Navbar  -->
+        <nav class="navbar navbar-default footer" role="navigation">
+            <div class="container">
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+			<a>&copy; {{COPYRIGHT_YEAR}} {{MY_SITE_NAME}}. All Rights Reserved</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'mission' %}">Mission</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="hide">
+            <div class='wmd-panel'>
+              <div id='wmd-button-bar'></div>
+              <textarea class='wmd-input' id="wmd-input"></textarea>
+              <div id='wmd-preview'></div>
+            </div>
+        </div>
+		<!-- Le javascript
+        ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/javascript">
+            var csrftokenValue = "{{csrf_token}}";
+        </script>
+        <script src="{{STATIC_URL}}elearning_academy/js/moment.min.js"></script>
+        <script src="{{STATIC_URL}}elearning_academy/js/jquery.min.js"></script>
+
+        <script src="{{STATIC_URL}}elearning_academy/js/jquery.wmd.js"></script>
+        <script src="{{STATIC_URL}}elearning_academy/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="{{STATIC_URL}}elearning_academy/js/bootstrap.min.js"></script>
+
+        <script src="{{STATIC_URL}}elearning_academy/js/react.min.js"></script>
+        <script src="{{STATIC_URL}}elearning_academy/js/JSXTransformer.js"></script>
+
+        <script src="{{STATIC_URL}}elearning_academy/js/main.js"></script>
+        <script type="text/jsx" src="{{STATIC_URL}}elearning_academy/js/mixins.jsx"></script>
+        <script type="text/jsx" src="{{STATIC_URL}}elearning_academy/js/components.jsx"></script>
+
+<!--
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [ ['\\(','\\)']]}});
+        </script>
+
+        <script type="text/javascript"
+            src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+-->
+        {% if IS_INSTRUCTOR or IS_CONTENT_DEVELOPER %}
+        <script type="text/javascript">
+            function changeMode(newMode) {
+                url = '{% url "switch-mode" %}'+'?format=json';
+                data = {
+                    'new_mode': newMode,
+                };
+                request = ajax_json_request(url, "POST", data);
+                request.done(function(response) {
+                    window.location.reload();
+                });
+                request.fail(function(response) {
+                    display_global_message("Mode not supported for you. Request \
+                        authorization from admin", "error");
+                });
+                return false;
+            }
+
+        </script>
+        {% endif %}
+
+		<script type="text/javascript">
+            <!-- View Specific JS Code and variables -->
+            <!-- Add here -->
+            {% block jsCode %}
+            {% endblock %}
+        </script>
+
+		<!-- View Specific JS Libraries -->
+		<!-- Add here -->
+		{% block jsLinks %} {% endblock %}
+
+        {% block jsScript %} {% endblock %}
+    </body>
+</html>

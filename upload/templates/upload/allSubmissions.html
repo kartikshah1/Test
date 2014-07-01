@@ -1,0 +1,78 @@
+{% extends 'upload/upload_base.html' %}
+{% load assignmentTags %}
+
+{% block sidebar %}
+<h4>{{ assignment.course.title }}, {{ assignment.name }}</h4>
+{% if disable %}
+	<a class="btn btn-primary disabled">Evaluate All</a>
+{% else %}
+	<a class="btn btn-primary" href="{% url 'evaluate_evalallsubmissions' assignment.id %}">Evaluate All</a>
+{% endif %}
+<br>
+<a class="btn btn-primary" style="margin-top: 12px" href="{% url 'download_download_all_zipped' assignment.id %}">Download all files</a>
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">All Submissions</li>
+	</ul>
+</div>
+
+<div>
+	<h4>All submissions for Assignment {{ assignment.serial_number }} - {{ assignment.name }}</h4>
+	<h5>Total Number of submissions: {{ allSubmission|length }}</h5>
+</div>
+	<table class="table table-striped">
+	  <tr>
+	    <th>Name</th>
+	    <th>File</th>
+	    <th>Uploaded On</th>
+	    <th>Evaluate</th>
+	    <th>Practice test</th>
+	    <th>Results</th>
+	  </tr>
+	  {% for submission in allSubmission %}
+	  <tr>
+	    <td>{{ submission.owner }}</td>
+	    <td><a href="{{ submission.filePath.url }}">{{ submission.filePath|getfilename }}</a></a></td>
+	    <td>{{ submission.uploaded_on|date:"H:i, M d, Y" }}</td>
+	    {% if disable %}
+	    	<td><a title="At least one of the sections has some error." class="btn btn-primary disabled">Evaluate</a></td>
+	    	<td>Run</td>
+	    	<td>Results</td>
+	    {% elif submission.is_stale %}
+	    	<td><a title="Assignment specification is updated after this submission. This is older submission." class="btn btn-primary disabled">Evaluate</a></td>
+	    	<td>Run</td>
+	    	<td>Results</td>
+	    {% else %}
+	    	<td><a class="btn btn-primary" href="{% url 'evaluate_evaluatesubmission' submission.id %}">Evaluate</a></td>
+	    	<td><a class="btn btn-primary" href="{% url evaluate_runpracticetest submission.id %}">Run</a></td>
+	    	{% if submission.result_available_v %}
+	    		<td title="Total marks"><a href="{% url evaluate_showresult submission.id %}">{{ submission.marks_v }}</td>
+	    	{% else %}
+	    		<td title="Result is not available. Please evaluate first.">-</td>
+	    	{% endif %}
+	    {% endif %}
+	  </tr>
+	  {% endfor %}
+	</table>
+
+	<div class="pagination">
+	    <span class="step-links pull-right">
+	        {% if allSubmission.has_previous %}
+	            <a href="?page={{ allSubmission.previous_page_number }}">previous</a>
+	        {% endif %}
+	
+	        <span class="current">
+	            Page {{ allSubmission.number }} of {{ allSubmission.paginator.num_pages }}.
+	        </span>
+	
+	        {% if allSubmission.has_next %}
+	            <a href="?page={{ allSubmission.next_page_number }}">next</a>
+	        {% endif %}
+	    </span>
+</div>
+{% endblock %}

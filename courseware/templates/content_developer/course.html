@@ -1,0 +1,41 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/courses.css" rel="stylesheet">
+<link href="{{STATIC_URL}}courseware/css/course_student.css" rel="stylesheet">
+<link href="{{STATIC_URL}}discussion_forum/css/forum.css" rel="stylesheet">
+<link href="{{STATIC_URL}}elearning_academy/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}discussion_forum/js/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}discussion_forum/js/forumentities.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}discussion_forum/js/forum.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/generic.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/category_loader.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/content_developer/course_settings.jsx"> </script>
+<script type="text/jsx" src="{{STATIC_URL}}progress/js/progress_entities.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}progress/js/instructor/progress.jsx"> </script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/instructor/course_info.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/content_developer/course_student.jsx"> </script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/content_developer/course_page.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/content_developer/course_playlist.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/content_developer/course.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+        <CourseBody id="{{course.id}}" page_ref="{{ref}}" forumid='{{course.forum.id}}'/>, document.getElementById('courseBody')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+    <div id="courseBar" class="row">
+        <div class="col-md-8 courseTitle">
+            {{ course.title|title }}
+        </div>
+    </div>
+    <div id="courseBody" class="row courseContainer">
+    </div>
+{% endblock %}

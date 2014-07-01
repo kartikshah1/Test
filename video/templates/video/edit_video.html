@@ -1,0 +1,93 @@
+{% extends "elearning_academy/root.html" %}
+
+{% block jsLinks %}
+
+
+{% endblock %}
+
+
+{% block body %}
+
+<div id="video-container" class="col-md-offset-2">
+    <div>
+        <video id="video-player" class="video-js vjs-default-skin" controls autobuffer width="720" height="480" data-setup='{}'>
+            <source type='video/webm' src="/media/static/video/a.webm">
+            <source type="video/mp4" src="/media/static/video/a.mp4">
+            <track src="/media/static/video/a.srt" srclang="en" label="English" default>
+        </video>
+    </div>
+
+    <div id="markers">
+    </div>
+
+    <hr id="timeline"/>
+
+    <ul id="marking">
+    </ul>
+</div>
+
+{% endblock %}
+
+
+{% block cssLinks %}
+
+<link rel=stylesheet href="{{STATIC_URL}}video-js/video-js.css" type="text/css">
+<script src="{{STATIC_URL}}video-js/video.js"></script>
+<script src="{{STATIC_URL}}video-js/video-speed.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="{{STATIC_URL}}video/js/video-edit.js">
+</script>
+
+<style type="text/css">
+#content_list {
+    list-style-position:inside;
+    padding: 10px;
+    margin-right: 80px;
+    font-weight: bold;
+    color: white;
+    background-color: gray;
+}
+
+#content_entry {
+    margin-left: 720px;
+    padding: 5px 10px 5px 10px;
+}
+
+#content_entry:hover {
+    cursor: pointer;
+    background-color: black;
+}
+
+#timeline {
+    position: relative;
+    border: 0;
+    margin: 0;
+    width: 720px;
+    height: 10px;
+    background-color: #333;
+}
+
+#markers {
+    margin: 0;
+    margin-top: 40px;
+    padding: 0;
+}
+
+.drag_marker:hover {
+    cursor: pointer;
+}
+
+#marking {
+    margin: 0;
+    padding: 0;
+}
+
+#marking li {
+    display: inline;
+}
+
+.drag_marker {
+    position: relative;
+}
+</style>
+
+{% endblock %}

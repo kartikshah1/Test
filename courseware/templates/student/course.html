@@ -1,0 +1,49 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/courses.css" rel="stylesheet">
+<link href="{{STATIC_URL}}discussion_forum/css/forum.css" rel="stylesheet">
+<style>
+    .contentheading {
+        padding-bottom: 7px;
+        border-bottom: 3px solid burlywood;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}discussion_forum/js/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}discussion_forum/js/forumentities.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/mixins.jsx"> </script>
+<script type="text/jsx" src="{{STATIC_URL}}progress/js/progress_entities.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}progress/js/student/progress.jsx"> </script>
+<script type="text/jsx" src="{{STATIC_URL}}progress/js/student/scorecard.jsx"> </script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/student/course_info.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/student/course_page.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/student/course_playlist.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}discussion_forum/js/forum.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/student/course.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+        <CourseBody id="{{course.id}}" forumid='{{course.forum.id}}'/>, document.getElementById('courseBody')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+    <div id="courseBar" class="row">
+        <div class="col-md-8 courseTitle">
+            {{ course.title|title }}
+        </div>
+        <div class="col-md-4 pull-right">
+            <form class="mynavbar-search" method="POST" action="">
+                {% csrf_token %}
+                <input type="text" class="mysearch-query pull-right" name="query" value="{{query}}" placeholder="Search Discussions">
+            </form>
+        </div>
+    </div>
+    <div id="courseBody" class="row courseContainer">
+    </div>
+{% endblock %}

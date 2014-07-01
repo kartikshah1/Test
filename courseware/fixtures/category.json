@@ -1,0 +1,10 @@
+[
+    {
+        "model": "courseware.Category",
+        "pk": 1,
+        "fields": {
+            "parent": 1,
+            "title": "Computer Network"
+        }
+    },
+]

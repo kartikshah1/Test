@@ -1,0 +1,30 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{%block title %}Quiz Admin{% endblock %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}quiz/css/quiz.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}quiz/js/quiz_admin.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}quiz/js/main_admin.jsx"></script>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<div id="question-module-edit-admin" class="col-md-12">
+</div>
+
+<div id="quiz-edit-admin" class="col-md-12">
+</div>
+
+<div id="quiz-admin" class="col-md-12">
+</div>
+
+{% endblock %}

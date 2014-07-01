@@ -1,0 +1,84 @@
+{% extends 'evaluate/evaluate_base.html' %}
+{% load evaluatetags %}
+{% block title %}{{ assignment.name }} Results{% endblock %}
+
+{% block sidebar %}
+	{% if is_student %}
+		<!-- <a href="{% url 'cribs_createcrib' assignment.id %}">Register Crib</a> -->
+	{% endif %}
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Results</li>
+	</ul>
+</div>
+
+	<h4>Results for Assignment {{ assignment.serial_number }} {{ assignment.name }}</h4>
+	
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Section</th>
+				<th>Compiled ?</th>
+				<th>Run Again</th>
+				<th>Testcase</th>
+				<th>Pass/Fail</th>
+				<th>Marks</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for prgrm in results.program_results %}
+				{% if prgrm.program_result.missing_file_names %}
+					<tr>
+						<td rowspan="1">{{ prgrm.program_result.program.name }}</td>
+						<td><img title="Files not found to compile" src="{{ STATIC_URL }}img/document-cross.png"/></td>
+						<td><a href="#">Run</a></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				{% elif prgrm.program_result.compiler_return_code == 0 %}
+					<tr>
+						{% if prgrm.testResults %}
+							<td rowspan="{{ prgrm.testResults|length }}">{{ prgrm.program_result.program.name }}</td>
+							<td rowspan="{{ prgrm.testResults|length }}"><img title="Compilation Successful" src="{{ STATIC_URL }}img/tick.png"/></td>
+							<td rowspan="{{ prgrm.testResults|length }}"><a href="#">Run</a></td>
+							{% for tst in prgrm.testResults %}
+								<td>{{ tst.test_case.name }}</td>
+								{% if tst.return_code == 0 and tst.test_passed %}
+									<td><img title="Testcase passed" src="{{ STATIC_URL }}img/tick.png"/></td>
+								{% else %}
+									<td><img title="{{ error_msg|getdictvalue:tst.return_code }}" src="{{ STATIC_URL }}img/cross.gif"/></td> 
+								{% endif %}
+								<td>{{ tst.marks }}</td>
+								</tr><tr>
+							{% endfor %}
+						{% else %}
+							<td rowspan="1">{{ prgrm.program_result.program.name }}</td>
+							<td><img title="Compilation Successful" src="{{ STATIC_URL }}img/tick.png"/></td>
+							<td><a href="#">Run</a></td>
+							<td colspan="3">No testcases found for this Section</td>
+						{% endif %}
+					</tr>
+				{% else %}
+					<tr>
+						<td rowspan="1">{{ prgrm.program_result.program.name }}</td>
+						<td><img src="{{ STATIC_URL }}img/alert.png"/></td>
+						<td><a href="#">Run</a></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+			<tr>
+				<td colspan="5">Total Marks</td>
+				<td>{{ results.marks }}</td>
+			</tr>
+		</tbody>
+	</table>
+{% endblock %}

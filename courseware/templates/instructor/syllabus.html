@@ -1,0 +1,23 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/instructor/syllabus.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/generic.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/instructor/syllabus-right-pane.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/instructor/syllabus.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+        <SyllabusStructure id='{{course.id}}'/>, document.getElementById('syllabus')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+    <div id="syllabus" class="row">
+    </div>
+{% endblock %}

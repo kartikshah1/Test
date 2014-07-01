@@ -1,0 +1,16 @@
+mysql-python
+Django==1.5.2
+djangorestframework
+django-model-utils
+django-admin-utils
+django-filter
+markdown
+gunicorn
+django-dajaxice
+django-dajax
+django-celery
+psutil
+Pillow
+south
+django-guardian
+easy_thumbnails

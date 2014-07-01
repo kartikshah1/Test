@@ -1,0 +1,73 @@
+{% extends 'assignments/assignments_base.html' %}
+
+{% block javascript %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui_smoothness.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.datetimepicker.css"/ >
+	<script src="{{ STATIC_URL }}js/jquery-1.9.1.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery-ui_1.10.3.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.datetimepicker.js"></script>
+{% endblock %}
+
+{% block title %}Configure Resource Limits{% endblock %}
+
+{% block sidebar %}
+	<p><h4>{{ course.code }}{{ course.name }}</h4></p>
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url assignments_index assignment.course.id %}">{{ assignment.course.name }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url assignments_details assignment.id %}">{{ assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Configure Resource Limits</li>
+	</ul>
+</div>
+<form action="" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div style="display:none">
+		<input type="hidden" name="page_source" value="{{ source }}"></input>
+	</div>
+	<fieldset>
+	<legend>Configure Resource Limits for "{{ title }}"</legend>
+	<table class="table">
+		{{ form.as_table }}
+		{% if testcases %}
+		<tr>
+			<th>Apply on:</th>
+			<td>
+			{% if source == 'testcase' %}
+				<div>Testcase "{{ testcases.name }}" of section "{{ testcases.program.name }}"</div>
+				<div style="display:none"><input id="id{{ testcases.id }}" type="checkbox" name="testcases_cbx" value="{{ testcases.id }}" checked/></div>
+
+			{% elif source == 'section' %}
+				<ol>
+				<li><i>{{ testcases.0.program.name }}</i> <br/> 
+				{% for a_test in testcases %}
+					<input id="id{{ a_test.id }}" type="checkbox" name="testcases_cbx" value="{{ a_test.id }}" checked/>
+					<label style="display: inline" for="id{{ a_test.id }}">{{ a_test.name }}</label> <br/>
+				{% endfor %}
+				</li>
+				</ol>
+			{% else %}
+				<ol>
+				{% for a_testcases in testcases %}
+					<li><i>{{ a_testcases.0.program.name }}</i> <br/> 
+					{% for a_test in a_testcases %}
+						<input id="id{{ a_test.id }}" type="checkbox" name="testcases_cbx" value="{{ a_test.id }}" checked/>
+						<label style="display: inline" for="id{{ a_test.id }}">{{ a_test.name }}</label> <br/>
+					{% endfor %}
+					</li>
+				{% endfor %}
+				</ol>
+			{% endif %}
+			</td>
+		</tr>
+		{% endif %}
+		<tr><th></th><td>
+  		<input class="btn btn-large btn-info" type="submit" value="Apply"/>
+  		</td></tr>
+	</table>
+	</fieldset>
+</form>
+{% endblock %}

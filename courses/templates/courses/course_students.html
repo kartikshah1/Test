@@ -1,0 +1,43 @@
+{% extends 'courses/base_courses.html' %}
+
+{% block title %}Students enrolled in this course{% endblock %}
+
+{% block sidebar %}
+<h4>Students enrolled in {{ course.name }} ({{ course.code }})</h4>
+{% endblock%}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url assignments_index course.id %}">{{ course.name }}</a> <span class="divider">/</span></li>
+		<li class="active">Students</li>
+	</ul>
+</div>
+{% if all_students %}
+	<div>
+		<h5>Total enrolled students : {{ all_students|length }}</h5>
+	</div>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>User name</th>
+				<th>Name</th>
+				<th>Email id</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for a_student in all_students %}
+		    <tr>
+		    	<td>{{ forloop.counter }}</td>
+				<td rowspan="1">{{ a_student.username }}</td>
+				<td>{{ a_student.first_name }} {{ a_student.last_name }}</td>
+				<td>{{ a_student.email }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% else %}
+	<div> No one has joined this course yet. </div>
+{% endif %}
+{% endblock %}

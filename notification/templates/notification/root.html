@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %} {% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <style>
+            .footer-bar-right li, .footer-bar-left li{
+                display:inline-block;
+                margin: 0px auto;
+                padding: 0px
+            }
+            a, a:visited, a:hover, a:active {
+                text-decoration: none;
+                color: inherit;
+            }
+            .footer-bar-left {
+                list-style-type: none;
+                float:left;
+                margin: 0px;
+                padding: 0px;
+            }
+            .footer-bar-right {
+                list-style-type: none;
+                float:right;
+                margin: 0px;
+                padding: 0px;
+            }
+            .footer-bar {
+                background:#40096b;
+                color:#E63017;
+                margin:0px;
+            }
+            .footer-bar a, .footer-bar a:link, .footer-bar a:visited {
+                padding:0px 15px;
+                float:left;
+                width:auto;
+                border-radius: 2px;
+            }
+            .footer-bar a:hover {
+                background-color: #9E59D1;
+            }
+        </style>
+        {% block cssLinks %} {% endblock %}
+
+    </head>
+
+    <body style="background:#E7E4E4;color:#010101; font-family: Georgia, Arial, Helvetica,
+            Verdana, sans-serif; font-size:12px; line-height:18px;
+            margin: 25px 30px 15px;">
+
+        <table class="mail-container" width="600" style="margin: 0px auto;
+             max-width: 600; border-spacing: 0px">
+            <tr>
+                <td>
+                    <table class="header" width="600" style="background:#CB97F3">
+                        <tr>
+                            <td>
+                                <span style="color:#7109F5; display: block;
+                                padding:0px 20px;">
+                                <a href="{{MY_SERVER}}{% url 'index' %}"
+                                    target="_blank" class="logo">
+                                <h1> {{MY_SITE_NAME}} </h1> </a>
+                                </span>
+                                <!-- Elearning Logo -->
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="mail-content" style="margin: 0px auto;
+                        max-width: 600px; background:#EBEBEB;border:20px;" width=600>
+                        <tr>
+                            <td>
+                                <div class="message" style:"color: ;\
+                                font-size: ;line-height: ">
+                                    {% block email_body %}
+                                    {% endblock %}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="footer-bar" width="600"
+                        style="background:#CB97F3; color:#40096B;">
+                        <tr>
+                            <td>
+                                <div class="container" style="font-size:10px;">
+                                    <ul class="footer-bar-left">
+                                        <li>
+                                            <span style="float:left; padding:0px 15px;
+                                            word-spacing:1px">
+                                            &copy; 2013 {{MY_SITE_NAME}}. All
+                                            rights reserved.
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <ul class="footer-bar-right">
+                                        <li><a href="#" target="_blank">About Us</a></li>
+                                        <li><a href="#" target="_blank">Contact</a></li>
+                                        <li><a href="#" target="_blank">Help</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

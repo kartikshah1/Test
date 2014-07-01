@@ -1,0 +1,180 @@
+{% extends 'assignments/assignments_base.html' %}
+{% load assignmentTags %}
+
+{% block javascript %}
+	{{ block.super }}
+	<script type="text/javascript">
+	$(function() {
+		$('a').click(function(e) {
+			if (this.id == "uptext") {
+				$('#userinput').html('<label for="txt"><h4>Enter your input here to check output.</h4></label>\
+						<textarea id="txt" name="inputText" placeholder="Type your input here." rows="5" cols="30"></textarea><br/>');
+				return false;
+			}
+			else if (this.id == "upfile") {
+				$('#userinput').html('<label for="infile"><h4>Select a file to upload.</h4></label>\
+						<input id="infile" name="inputFile" type="file"/>');
+				return false;
+			}
+			return true;
+		});
+	});
+	</script>
+{% endblock %}
+
+{% block title %}Assignment Section Details{% endblock %}
+
+{% block sidebar %}
+	<input type="hidden" value="{{ program.assignment.id }}" id="asgn_id" />
+	<input type="hidden" value="{{ program.id }}" id="prog_id" />
+	{{ block.super }}
+{% endblock %}
+
+{% block main %}
+	<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' program.assignment.course.id %}">{{ program.assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li><a href="{% url 'assignments_details' program.assignment.id %}">{{ program.assignment.name }}</a> <span class="divider">/</span></li>
+		<li class="active">{{ program.name }}</li>
+	</ul>
+	</div>
+
+	{% if is_due %}
+  	<div class="alert alert-error">
+    	This assignment is due.
+  	</div>
+	{% endif %}
+
+{% if user == assignment.creater %}
+	{% if not testcases %}
+	<div class="alert alert-warning">
+		 This Section does not have any test case. Please <a href="{% url 'assignments_createtestcase' program.id %}">Add</a> at-least one test case.
+	</div>
+	{% endif %}
+
+	{% if not program.is_sane and program_errors %}
+	<div class="alert alert-error">
+		This section has errors.<br>
+		{{ program_errors.error_message|linebreaksbr }}
+	</div>
+	{% endif %}
+
+	{% if testcase_errors %}
+		<div class="alert alert-error">
+			There was an error in generating output file of 
+			{% for t_error in testcase_errors %}
+				<a href="{% url 'assignments_detailstestcase' t_error.testcase.id %}">{{ t_error.testcase.name }} </a>
+			{% endfor %}
+			 . Please check the errors and correct them.<br>
+		</div>
+	{% endif %}
+{% endif %}
+
+<style>
+	.info {width:150px; }
+	.edit-icon {background-image:url('{{ STATIC_URL }}img/edit.png'); background-repeat:no-repeat;}
+	.delete-icon {background-image:url('{{ STATIC_URL }}img/remove.png'); background-repeat:no-repeat;}
+	.add-icon {background-image:url('{{ STATIC_URL }}img/add.png'); background-repeat:no-repeat;}
+</style>
+{% if user == assignment.creater %}
+	<div class="course pull-right">
+		<span class="add-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<a href="{% url 'assignments_createtestcase' program.id %}">Add Testcase</a>&nbsp;
+		<span class="edit-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<a href="{% url 'assignments_editprogram' program.id %}">Edit Section</a>&nbsp;
+		<span class="delete-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<a href="{% url 'assignments_removeprogram' program.id %}" onclick="return confirm('Deleting this section will result in deleting all associated test-cases and results thereof if any. \nDo you want to continue?')">Delete Section</a>
+	</div>
+	<br/>
+{% endif %}
+<div class="course-content" style="border:2px solid #ccc">
+	<h4 style="text-align:center;">{{ program.name }}</h4>
+	<table class="table table-striped">
+	    <tbody>
+			  <tr>
+				  <td class="info"><b>Section Type</b></td>
+					<td>{{ program.program_type }}</td>
+				</tr>
+			{% if user == assignment.creater and testcases %}
+	     	<tr>
+	     		<td class="info"><b>Configure Resource Limits</b></td>
+	     		<td><a href="{% urlwithgetparam assignments_configsafeexecparams assignment.id get_params=get_params %}">Configure</a></td>
+	     	</tr>
+	      	{% endif %}
+		  {% if compiler_command %}
+	      <tr>
+	        <td class="info"><b>Compiler Command</b></td>
+	        <td>{{ compiler_command }}</td>
+	      </tr>
+	      {% endif %}
+		  {% if execution_command %}
+	      <tr>
+	        <td class="info"><b>Execution Command</b></td>
+	        <td>{{ execution_command }}</td>
+	      </tr>
+	      {% endif %}
+	      {% if user == assignment.creater or program.program_type == "Practice" or is_due %}
+	      	{% if program.program_files %}
+	      <tr>
+	        <td class="info"><b>Section files</b></td>
+	        <td><a href="{{ program.program_files.url }}">{{ program.program_files|getfilename }}</a></td>
+	      </tr>
+	      	{% endif %}
+	      	{% if program.makefile %}
+	      <tr>
+	        <td class="info"><b>Makefile</b></td>
+	        <td><a href="{{ program.makefile.url }}">{{ program.makefile|getfilename }}</a></td>
+	      </tr>
+	      	{% endif %}
+	      	{% if program.description %}
+	      <tr>
+	        <td class="info"><b>Description</b></td>
+	        <td>{{ program.description|spacify }}</td>
+	      </tr>
+	      	{% endif %}
+	      {% endif %}
+	    </tbody>
+	</table>
+</div>
+<script type="text/javascript">
+	function validateForm() {
+		if($('#infile').val() == '') {
+			alert('Please select a file');
+			return false;
+		}
+	}
+</script>
+{% if user != assignment.creater %}
+	{% if program.program_type == "Practice" or is_due %}
+		<hr>
+		{% if program.is_sane and program.solution_ready and has_submitted %}
+			<div>
+				<p>Here you can upload your input to check output of this section.</p>
+			</div>
+			<div id="checkoutput">
+				<span class="btn-group">
+					<a id="upfile" class="btn btn-primary" href="">Upload input in a file</a>
+					<a id="uptext" class="btn btn-primary" href="">Upload input from text box</a>
+				</span>
+				<form action="{% url 'evaluate_checkoutput' program.id %}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
+					{% csrf_token %}
+					<div id="userinput">
+						<label for="infile"><h4>Select a file to upload.</h4></label>
+						<input id="infile" name="inputFile" type="file"/>
+					</div>
+					<br/>
+					<input class="btn btn-info" type="submit" value="Check Output"/>
+				</form>
+			</div>
+		{% elif not program.solution_ready %}
+			<div>
+				Model Solution is not available now. You can not compare output on custom input.
+			</div>
+		{% else %}
+			<div>
+				Upload Solution code to check output on your input to the section.
+			</div>
+		{% endif %}
+	{% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,318 @@
+{% extends 'assignments/assignments_base.html' %}
+{% load assignmentTags %}
+
+{% load dajaxice_templatetags %}
+
+{% block title %}{{ course.title }} {{ assignment.name }} Details{% endblock %}
+
+{% block popup %}
+
+<script>
+	$(document).ready(function() {
+//		$('#filedata').hide();
+		$(".close-popup").click(function(e) {
+			$(".popup, .overlay").hide();
+		});
+		
+	});
+	
+	$(document).keyup(function(e) {
+		  if (e.keyCode == 27) {
+			  $(".popup, .overlay").hide();
+		  }
+	});
+	
+	function showpopup() {
+		$(".overlay").show();
+		$(".popup").show();
+	}
+</script>
+<style>
+.popup{  z-index: 1999; display: none; position: fixed;width:100%; height:100%;}
+.close-pop { margin-right: 7px; margin-top: 3px; }
+.popupcontainer{  margin:auto;width:95%; height:100%;}
+.inside-box {padding:30px; text-align:center; height:80%;}
+.popup-box { background:#ddd;  border-radius: 7px; height:80%;}
+.details {height:100%;}
+</style>
+
+<div class="popup">
+	 <div class="popupcontainer">
+	     <div class="details">
+	         <div class="popup-box">
+	         	<div class="close-pop pull-right">
+	                 <a href="#" class="close-popup">×</a>
+	             </div>
+	             <div class="inside-box">
+					<div class="well popup-sidebar" style="padding: 8px 0; border:2px solid #ccc; height: 100%; width:20%; position:relative; margin-right:20px; float:left;">
+						<div style="overflow-y: scroll; overflow-x: scroll; height:100%">
+					        <ul class="nav nav-list popup-data-files">
+				            </ul>
+				         </div>
+					</div>
+					<div class="popup-main">
+						<link rel="stylesheet" href="{{ STATIC_URL }}css/codemirror.css" />
+						<script src="{{ STATIC_URL }}js/codemirror.js"></script>
+						<script src="{{ STATIC_URL }}js/matchbrackets.js"></script>
+						<script src="{{ STATIC_URL }}js/clike.js"></script>
+						<textarea id="filedata" style="resize: none; display:none;"></textarea>
+						<script>
+							function reload_codeMirror() {
+								$("div.CodeMirror").remove();
+								var editor = CodeMirror.fromTextArea(document.getElementById("filedata"), {
+							        lineNumbers: true,
+							        matchBrackets: true,
+							        mode: "text/x-csrc"
+							      });
+								$('.CodeMirror').height($('.popup-sidebar').height() + 15);
+							}
+					    </script>
+					</div>
+					<div style="clear:both;"></div>
+	             </div>
+	         </div>
+	     </div>
+	 </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+	<input type="hidden" value="{{ assignment.id }}" id="asgn_id" />
+	<input type="hidden" value="" id="prog_id" />
+	{{ block.super }}
+{% endblock %}
+
+{% block main %}
+<div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'assignments_index' assignment.course.id %}">{{ assignment.course.title }}</a> <span class="divider">/</span></li>
+		<li class="active">{{ assignment.name }}</li>
+	</ul>
+</div>
+
+{% if is_due %}
+  <div class="alert alert-error">
+     This assignment is due.
+  </div>
+{% endif %}
+
+{% if messages %}
+	<div class="alert alert-success">
+	    {% for message in messages %}
+	    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
+	    {% endfor %}
+	</div>
+{% endif %}
+
+{% if user == assignment.creater %}
+{% if programs_with_errors %}
+	<div class="alert alert-error">
+		{% for prgrm in programs_with_errors %}
+				<a href="{% url 'assignments_detailsprogram' prgrm.program.id %}">{{ prgrm.program.name }} </a>
+			{% endfor %}
+		 have errors. There are some details that are not compatible with those given in this assignment. See Section detail page to know more.<br>
+	</div>
+{% endif %}
+
+{% if test_errors %}
+	<div class="alert alert-error">
+		There was an error in generating output file of 
+		{% for t_error in test_errors %}
+			<a href="{% url 'assignments_detailstestcase' t_error.testcase.id %}">{{ t_error.testcase.name }} </a>
+		{% endfor %}
+		 . Please make sure that output file in these testcases is correct.<br>
+	</div>
+{% endif %}
+
+{% if not programs %}
+	<div class="alert alert-warning">
+		 This Assignment does not have any section. Please <a href="{% url 'assignments_createprogram' assignment.id %}">Add</a> at-least one program.
+	</div>
+{% endif %}
+{% endif %}
+
+<style>
+	.info {width:150px; }
+	.edit-icon {background-image:url('{{ STATIC_URL }}img/edit.png'); background-repeat:no-repeat;}
+	.delete-icon {background-image:url('{{ STATIC_URL }}img/remove.png'); background-repeat:no-repeat;}
+	.add-icon {background-image:url('{{ STATIC_URL }}img/add.png'); background-repeat:no-repeat;}
+	.list-icon {background-image:url('{{ STATIC_URL }}img/list.png'); background-repeat:no-repeat;}
+	.stats-icon {background-image:url('{{ STATIC_URL }}img/stats.png'); background-repeat:no-repeat;}
+	.submission-icon {background-image:url('{{ STATIC_URL }}img/submission.png'); background-repeat:no-repeat;}
+	.crib-icon {background-image:url('{{ STATIC_URL }}img/crib.png'); background-repeat:no-repeat;}
+</style>
+<div style="overflow:hidden">
+	{% if user == assignment.creater %}
+		<div class="pull-left">
+			<span style="cursor:pointer" class="submission-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a href="{% url 'upload_showAllSubmissions' assignment.id %}">All Submissions</a>&nbsp;
+			<!-- <span style="cursor:pointer" class="crib-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a href="{% url 'cribs_allcribs' assignment.id %}">All Cribs</a>&nbsp; -->
+			<span style="cursor:pointer" class="submission-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			{% if isSubmitted %}
+				<a href="{% url 'evaluate_completeevaluationdetails' assignment.id %}">Assignment Results</a>&nbsp;
+			{% else %}
+				<a title="No Submissions until now" style="color:rgb(153, 153, 153); cursor:not-allowed;" href="#">Assignment Results</a>&nbsp;
+			{% endif %}
+		</div>
+		<div class="course pull-right">
+			<span style="cursor:pointer" class="add-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a href="{% url 'assignments_createprogram' assignment.id %}">Add Section</a>&nbsp;
+			<span style="cursor:pointer" class="edit-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a href="{% url 'assignments_edit' assignment.id %}">Edit Assignment</a>&nbsp;
+			<span style="cursor:pointer" class="delete-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a href="{% url 'assignments_removeassignment' assignment.id %}" onclick="return confirm('Deleting this assignment will result in deleting all associated sections, test-cases and students submissions if any. \nDo you want to continue?')">Delete Assignment</a>
+			<span style="cursor:pointer" class="stats-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a href="#stats" onclick="getStats({{ assignment.id }})">Get Stats</a>
+		</div>
+	{% else %}
+		<!-- <div class="pull-left">
+			<span style="cursor:pointer" class="crib-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a href="{% url 'cribs_mycribs' assignment.id %}">My Cribs</a>&nbsp;
+		</div> -->
+	{% endif %}
+</div>
+<div class="course-content" style="border:2px solid #ccc">
+	<h4 style="text-align:center;">Assignment {{ assignment.serial_number }} : {{ assignment.name }}</h4>
+	<table class="table table-striped">
+	    <tbody>
+	      <tr>
+	        <td class="info"><b>Description</b></td>
+	        <td>{{ assignment.description|spacify }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Deadline</b></td>
+	        <td>{{ assignment.deadline }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Hard Deadline</b></td>
+	        <td>{{ assignment.hard_deadline }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Assignment {% if not published %} Will be {% endif %} Published On</b></td>
+	        <td>{{ assignment.publish_on }}</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Late Submission</b></td>
+	        <td>{% if not assignment.late_submission_allowed  %}Not{% endif %} Allowed</td>
+	      </tr>
+	      <tr>
+	        <td class="info"><b>Files to be Submitted</b></td>
+	        <td>{{ assignment.student_program_files }}</td>
+	      </tr>
+	      {% if assignment.document or assignment.helper_code %}
+	      <tr>
+	        <td class="info"><b>Useful files</b></td>
+	        <td>
+	        	{% if assignment.document %}<a href="{{ assignment.document.url }}">Assignment Document</a> &nbsp;{% endif %}
+				{% if assignment.helper_code %}<a href="{{ assignment.helper_code.url }}">Helper code</a>{% endif %}
+	        </td>
+	      </tr>
+	      {% endif %}
+	      {% if user == assignment.creater %}
+	      <tr>
+	        <td class="info"><b>Solution Code</b></td>
+	        <td>
+	        	{% if assignment.model_solution %}
+	        		<a href="{{ assignment.model_solution.url }}">Solution code</a>
+	        	{% else %}
+	        		<a href="{% url 'assignments_edit' assignment.id %}" class="btn btn-warning">Upload Solution Code</a>
+	        	{% endif %}
+	        </td>
+	      </tr>
+		  <tr>
+	      	<td class="info"><b>Configure Resource Limits</b></td>
+	      	<td><a href="{% urlwithgetparam assignments_configsafeexecparams assignment.id get_params=get_params %}">Configure</a></td>
+	      </tr>
+	      {% endif %}
+	    </tbody>
+	</table>
+</div>
+{% dajaxice_js_import %}
+<script type="text/javascript">
+function getfilesAjaxcall(submissionid) {
+	Dajaxice.assignments.getfilesUploaded(Dajax.process,{'submissionID':submissionid});
+	showpopup();
+}
+function loadfile(submissionid, filepath) {
+	Dajaxice.assignments.loadFile(Dajax.process,{'submissionID':submissionid, 'filePath':filepath});
+	setTimeout(function() { reload_codeMirror(); }, 100);
+}
+</script>
+{% if user != assignment.creater %}
+	<div id="files">
+	<hr>
+	{% if submittedFiles %}
+		{% if program_not_ready %}
+			<div class="alert alert-error">
+				Grading for this assignment has been closed for now. This might be due to a problem on the instructors side. Check again after some time. 
+			</div>
+		{% elif disable_grading %}
+			<div class="alert alert-error">
+				Assignment specification has been modified since your last submission, Please upload again. 
+			</div>
+		{% endif %}
+		<h5>Your assignment files</h5>
+		<ul class="nav nav-list">
+		{% for submission in submittedFiles %}
+			<div style="margin-bottom:15px">
+			<li>
+				<span style="cursor:pointer" class="list-icon" onclick="getfilesAjaxcall({{ submission.id }})">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				&nbsp;&nbsp;<a href="{{ submission.filePath.url }}">{{ submission.filePath|getfilename }}</a>
+			<span class="btn-group pull-right">
+			{% if disable_grading or program_not_ready %}
+				<a class="btn disabled btn-primary">Evaluate</a>
+				<a class="btn btn-primary disabled">Run practice test</a>
+			{% else %}
+				<a class="btn btn-primary" href="{% url 'evaluate_evaluateassignment' submission.id%}">Evaluate</a>
+				<a class="btn btn-primary" href="{% url 'evaluate_evaluationdetails' submission.id%}">Report</a>
+				{% if practice_program %}
+					<a class="btn btn-primary" href="{% url 'evaluate_runpracticetest' submission.id%}">Run practice test</a>
+				{% else %}
+					<a class="btn btn-primary disabled">Run practice test</a>
+				{% endif %}
+			{% endif %}
+			<a class="btn btn-inverse" href="{% url 'assignments_deleteassignment' submission.id %}">Delete</a>
+			</span>
+			</li>
+			</div>
+		{% endfor %}
+	    </ul>
+	{% else %}
+		<h5 style="color: red">No files submitted for this assignment.</h5>
+	{% endif %}
+	</div>
+	{% if submission_allowed %}
+		{% if submittedFiles %}
+			<form onsubmit="return confirm('This action will replace your older submission.\nDo you want to continue?');" action="" method="POST" enctype="multipart/form-data">
+		{% else %}
+			<form action="" method="POST" enctype="multipart/form-data">
+		{% endif %}
+		{% csrf_token %}
+			<fieldset>
+			<legend>Upload Assignment</legend>
+			<table class="table">
+				{{ form.as_table }}
+				<tr><th></th><td>
+		  		<input class="btn btn-info" type="submit" value="Upload"/>
+		  		</td></tr>
+			</table>
+			</fieldset>
+		</form>
+	{% elif has_joined %}
+		<h5>The assignment is due.</h5>
+	{% else %}
+		<h5>Please join course <a href="{% url assignments_index assignment.course.id %}">{{ assignment.course.name }} ({{ assignment.course.code }})</a>to submit your solution.</h5>
+	{% endif %}
+{% endif %}
+ {% if user == assignment.creater %}
+	 <script>
+		 function getStats(assignmentID) {
+			Dajaxice.assignments.loadStats(Dajax.process,{'assignmentID':assignmentID});
+		 }
+	 </script>
+	 <hr />
+	 <div id="stats"></div>
+{% endif %} 
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "elearning_academy/logged_in.html" %}
+
+{%block title %}Home{% endblock %}
+
+{% block cssLinks %}
+<link href="{{STATIC_URL}}courseware/css/grid_template.css" rel="stylesheet">
+{% endblock %}
+
+{% block jsLinks %}
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/components/mixins.jsx"></script>
+<script type="text/jsx" src="{{STATIC_URL}}courseware/js/grid_template.jsx"></script>
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.renderComponent(
+        <MajorList
+            myurl="category/?parent={{ pk }}" suburl="course/"
+            subsuburl="category=" hrefpath="/category" subhpath="/course" coursepage='2'
+            heading="Major fields in your category" 
+            description="Select your course!!!"/>, 
+            document.getElementById('main-container')
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+{% endblock %}
